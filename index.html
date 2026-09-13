@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotasi Web Otomatis</title>
+  <title>AdsJellybut Rotator</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-    body { background-color: #121212; color: white; padding: 15px; text-align: center; }
+    body { background-color: #121212; color: white; text-align: center; padding: 10px; }
     
-    .header { margin-bottom: 15px; }
-    .status { font-size: 14px; color: #00ffcc; margin-top: 5px; }
-    .timer { font-size: 12px; color: #aaa; margin-top: 3px; }
+    .header { padding: 10px 0; background: #1e1e1e; border-radius: 8px; margin-bottom: 10px; }
+    .title { font-size: 16px; font-weight: bold; color: #fff; word-break: break-all; }
+    .status { font-size: 13px; color: #00ffcc; margin-top: 4px; }
+    .timer { font-size: 12px; color: #ffcc00; margin-top: 2px; font-weight: bold; }
 
-    /* Bingkai tempat situs web tampil */
+    /* Ukuran menyesuaikan layar HP */
     iframe {
       width: 100%;
-      height: 75vh;
+      height: 80vh;
       border: 2px solid #333;
-      border-radius: 10px;
+      border-radius: 8px;
       background: white;
     }
   </style>
@@ -25,16 +26,16 @@
 <body>
 
   <div class="header">
-    <h2 id="title">Memuat Web...</h2>
-    <div class="status" id="statusText">Situs 1 dari 6</div>
+    <div class="title" id="titleText">Memuat Web...</div>
+    <div class="status" id="statusText">Situs 1 dari 5</div>
     <div class="timer" id="timerText">Berganti dalam: 60 detik</div>
   </div>
 
-  <!-- Layar yang menampilkan situs web -->
+  <!-- Layar penampil web -->
   <iframe id="webFrame" src=""></iframe>
 
   <script>
-    // 1. Daftar URL situs yang ingin diputar (Silakan ubah/tambah URL di sini)
+    // Daftar URL publik yang bisa dibuka dalam iframe
     const daftarUrl = [
       "https://keytoto.com/",
       "https://superpetir19.com/",
@@ -45,27 +46,25 @@
     ];
 
     let indeksSekarang = 0;
-    let sisaWaktu = 60; // Waktu dalam detik (60 detik = 1 menit)
+    let sisaWaktu = 60; // Hitungan mundur per situs (60 detik)
 
     const frame = document.getElementById("webFrame");
-    const title = document.getElementById("title");
+    const titleText = document.getElementById("titleText");
     const statusText = document.getElementById("statusText");
     const timerText = document.getElementById("timerText");
 
-    // Fungsi untuk mengganti situs web
     function gantiWeb() {
       const urlTujuan = daftarUrl[indeksSekarang];
       frame.src = urlTujuan;
       
-      title.innerText = "Situs: " + urlTujuan.replace("https://", "");
+      titleText.innerText = "Situs: " + urlTujuan;
       statusText.innerText = `Menampilkan situs ${indeksSekarang + 1} dari ${daftarUrl.length}`;
       
-      // Lanjut ke indeks berikutnya (jika sudah di akhir, kembali ke 0)
       indeksSekarang = (indeksSekarang + 1) % daftarUrl.length;
-      sisaWaktu = 60; // Reset hitungan mundur
+      sisaWaktu = 60; 
     }
 
-    // Fungsi hitung mundur detik
+    // Timer hitung mundur 1 detik
     setInterval(() => {
       sisaWaktu--;
       timerText.innerText = `Berganti dalam: ${sisaWaktu} detik`;
@@ -75,7 +74,7 @@
       }
     }, 1000);
 
-    // Jalankan web pertama kali saat halaman dibuka
+    // Jalankan pertama kali
     gantiWeb();
   </script>
 
