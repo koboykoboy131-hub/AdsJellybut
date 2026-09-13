@@ -3,135 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>JellybutAdsControler</title>
+  <title>JellybutAdsController</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     
     body { 
-      background-color: #070c14; 
-      color: #e0f2fe; 
-      padding: 15px; 
+      background-color: #0b0c0e; 
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15), transparent 70%),
-        linear-gradient(to bottom, #070c14, #04070d);
+        radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.15), transparent 70%),
+        radial-gradient(circle at 50% 80%, rgba(139, 0, 0, 0.2), transparent 80%);
+      color: #d4af37; 
+      padding: 15px; 
       min-height: 100vh;
     }
-    
-    .sub-header { font-size: 10px; color: #38bdf8; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 2px; text-shadow: 0 0 5px rgba(56, 189, 248, 0.5); }
-    h1 { font-size: 22px; color: #ffffff; font-weight: 800; margin-bottom: 2px; letter-spacing: 0.5px; }
-    .status-root { font-size: 9px; color: #94a3b8; letter-spacing: 0.8px; margin-bottom: 15px; font-weight: 600; }
 
-    .card { 
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4)); 
-      border: 1px solid rgba(56, 189, 248, 0.25); 
-      border-radius: 12px; 
-      padding: 14px; 
-      margin-bottom: 12px; 
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(56, 189, 248, 0.05);
-      backdrop-filter: blur(8px);
+    /* Header kuil kuno */
+    .header-container { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #5c4a1e; padding-bottom: 10px; }
+    h1 { 
+      font-family: 'Cinzel', serif, sans-serif;
+      font-size: 20px; 
+      color: #f3e5ab; 
+      font-weight: 700; 
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px #000, 0 0 10px rgba(243, 229, 171, 0.3);
     }
-    .card-title { font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .status-root { font-size: 9px; color: #a89f91; letter-spacing: 1px; margin-top: 4px; font-weight: 600; text-transform: uppercase; }
 
+    /* Kartu bertema batu berukir */
+    .card { 
+      background: linear-gradient(135deg, #1c1d22, #141518); 
+      border: 2px solid #5c4a1e; 
+      border-radius: 10px; 
+      padding: 12px; 
+      margin-bottom: 12px; 
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.9);
+      position: relative;
+    }
+    .card-title { 
+      font-family: 'Cinzel', serif;
+      font-size: 10px; 
+      color: #d4af37; 
+      text-transform: uppercase; 
+      font-weight: 700; 
+      margin-bottom: 8px; 
+      letter-spacing: 1px; 
+    }
+
+    /* Input & Select gaya ukiran batu */
     input[type="text"], select {
       width: 100%; 
       padding: 10px 12px; 
-      background-color: rgba(7, 12, 20, 0.9); 
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 8px; 
-      color: #38bdf8; 
+      background-color: #0d0e11; 
+      border: 1px solid #7a6328;
+      border-radius: 6px; 
+      color: #f3e5ab; 
       font-size: 12px; 
       margin-bottom: 10px; 
       outline: none;
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
     }
 
-    input[type="text"]:focus, select:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4), inset 0 0 8px rgba(0, 0, 0, 0.8);
-    }
-
+    /* Tombol Utama (Emas Kuno) */
     .btn {
       display: block; 
       width: 100%; 
-      padding: 10px; 
-      border: none; 
-      border-radius: 8px;
-      font-weight: 800; 
+      padding: 12px; 
+      border: 1px solid #ffe89c; 
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-weight: 700; 
       font-size: 13px; 
       cursor: pointer; 
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       transition: all 0.2s ease;
     }
     
-    .btn-blue { 
-      background: linear-gradient(180deg, #0284c7, #0369a1); 
-      color: #ffffff; 
-      border: 1px solid #38bdf8;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    .btn-gold { 
+      background: linear-gradient(180deg, #c59b27, #785a0d); 
+      color: #fff8dc; 
+      text-shadow: 1px 1px 2px #000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(197, 155, 39, 0.4);
     }
-    .btn-blue:active { transform: scale(0.98); opacity: 0.9; }
+    .btn-gold:active { transform: scale(0.98); }
     
     .btn-group { display: flex; gap: 10px; }
     
+    /* Tombol Start (Batu Hijau Jade/Emerald) */
     .btn-start { 
-      background: linear-gradient(180deg, #22c55e, #15803d); 
-      color: #ffffff; 
-      border: 1px solid #4ade80;
-      box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+      background: linear-gradient(180deg, #1e5c33, #0b2b16); 
+      color: #a3e0b5; 
+      border: 1px solid #34a853;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(52, 168, 83, 0.3);
       flex: 1; 
     }
-    .btn-start:active { transform: scale(0.98); }
 
+    /* Tombol Stop (Batu Abu Gelap) */
     .btn-stop { 
-      background: linear-gradient(180deg, #1e293b, #0f172a); 
-      color: #64748b; 
-      border: 1px solid #334155; 
+      background: linear-gradient(180deg, #2c2d33, #16171a); 
+      color: #7a7d85; 
+      border: 1px solid #44464e; 
       flex: 1; 
       cursor: not-allowed; 
     }
 
-    .url-display { font-size: 11px; color: #38bdf8; word-break: break-all; margin-bottom: 4px; }
-    .webview-status { font-size: 11px; color: #94a3b8; margin-bottom: 8px; }
+    .url-display { font-size: 11px; color: #d4af37; word-break: break-all; margin-bottom: 4px; }
+    .webview-status { font-size: 11px; color: #a89f91; margin-bottom: 8px; }
 
+    /* Frame WebView berpola bingkai ukiran */
     .iframe-wrapper {
       position: relative;
       border-radius: 8px;
       overflow: hidden;
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+      border: 3px solid #5c4a1e;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
     }
 
     iframe { width: 100%; height: 320px; border: none; background-color: #ffffff; display: block; }
 
-    /* Modal Pemblokiran Root */
+    /* Modal Root */
     .root-warning {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #070c14; color: #ef4444; padding: 30px 20px; text-align: center;
+      background: #0b0c0e; color: #dc2626; padding: 30px 20px; text-align: center;
       z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
     }
-    .root-warning h2 { font-size: 20px; margin-bottom: 10px; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-    .root-warning p { font-size: 13px; color: #94a3b8; }
+    .root-warning h2 { font-family: 'Cinzel', serif; font-size: 20px; margin-bottom: 10px; }
+    .root-warning p { font-size: 13px; color: #a89f91; }
   </style>
 </head>
 <body>
 
-  <!-- Screen jika terdeteksi Root -->
   <div id="root-screen" class="root-warning">
     <h2>AKSES DITOLAK</h2>
-    <p>Aplikasi tidak mendukung perangkat yang di-root (Root/Magisk Detected).</p>
+    <p>Aplikasi tidak mendukung perangkat yang di-root.</p>
   </div>
 
-  <!-- Screen Utama Dashboard -->
   <div id="app-screen">
-    <div class="sub-header">CONTROL WEB JELLYBUT</div>
-    <h1>JellybutAdsControler</h1>
-    <div class="status-root" id="root-status">NON-ROOT DEVICE • SYSTEM SECURE</div>
+    <div class="header-container">
+      <h1>JellybutAdsController</h1>
+      <div class="status-root">NON-ROOT DEVICE • SYSTEM SECURE</div>
+    </div>
 
     <div class="card">
       <div class="card-title">REMOTE URL SOURCE (ROTASI OTOMATIS)</div>
       <input type="text" id="remote-url" value="https://superpetir19.com/">
-      <button class="btn btn-blue" onclick="saveAndRefresh()">SAVE & REFRESH</button>
+      <button class="btn btn-gold" onclick="saveAndRefresh()">SAVE & REFRESH</button>
     </div>
 
     <div class="card">
@@ -211,10 +229,10 @@
       
       var btnStop = document.getElementById('btn-stop');
       btnStop.style.cursor = "pointer";
-      btnStop.style.background = "linear-gradient(180deg, #ef4444, #b91c1c)";
-      btnStop.style.color = "#ffffff";
-      btnStop.style.border = "1px solid #f87171";
-      btnStop.style.boxShadow = "0 0 12px rgba(239, 68, 68, 0.4)";
+      btnStop.style.background = "linear-gradient(180deg, #8b0000, #4a0000)";
+      btnStop.style.color = "#ffcdd2";
+      btnStop.style.border = "1px solid #ef5350";
+      btnStop.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(239, 83, 80, 0.4)";
     }
 
     function stopAutomation() {
@@ -224,9 +242,9 @@
       
       var btnStop = document.getElementById('btn-stop');
       btnStop.style.cursor = "not-allowed";
-      btnStop.style.background = "linear-gradient(180deg, #1e293b, #0f172a)";
-      btnStop.style.color = "#64748b";
-      btnStop.style.border = "1px solid #334155";
+      btnStop.style.background = "linear-gradient(180deg, #2c2d33, #16171a)";
+      btnStop.style.color = "#7a7d85";
+      btnStop.style.border = "1px solid #44464e";
       btnStop.style.boxShadow = "none";
     }
 
