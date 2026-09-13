@@ -3,111 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mengalihkan...</title>
+  <title>JellybutAdsControler</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-      text-align: center; 
-      background: #f4f4f9; 
-      padding: 15px; 
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
+    
+    .sub-header { font-size: 11px; color: #58a6ff; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
+    h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
+    .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
+
+    .card { background-color: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+    .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; }
+
+    input[type="text"], select {
+      width: 100%; padding: 12px; background-color: #0d1117; border: 1px solid #30363d;
+      border-radius: 8px; color: #e6edf3; font-size: 13px; margin-bottom: 10px; outline: none;
     }
-    .container { 
-      max-width: 500px; 
-      margin: 10px auto; 
-      background: #fff; 
-      padding: 20px; 
-      border-radius: 12px; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+
+    .btn {
+      display: block; width: 100%; padding: 12px; border: none; border-radius: 8px;
+      font-weight: bold; font-size: 14px; cursor: pointer; text-transform: uppercase;
     }
-    h3 { font-size: 1.2rem; color: #333; margin-bottom: 8px; }
-    p { font-size: 0.95rem; color: #666; margin-bottom: 15px; }
-    .ad-container { 
-      width: 100%; 
-      height: 350px; 
-      border: 1px solid #e0e0e0; 
-      border-radius: 8px; 
-      overflow: hidden; 
-      margin: 10px 0; 
-      background: #fafafa; 
+    .btn-blue { background-color: #1f6feb; color: #ffffff; }
+    .btn-blue:active { background-color: #1158c7; }
+    
+    .btn-group { display: flex; gap: 10px; }
+    .btn-start { background-color: #1f6feb; color: #ffffff; flex: 1; }
+    .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; cursor: not-allowed; }
+
+    .url-display { font-size: 11px; color: #e6edf3; word-break: break-all; margin-bottom: 5px; }
+    .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
+
+    iframe { width: 100%; height: 350px; border: 1px solid #1f6feb; border-radius: 8px; background-color: #ffffff; }
+
+    /* Modal Pemblokiran Root */
+    .root-warning {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0d1117; color: #ff7b72; padding: 30px 20px; text-align: center;
+      z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
     }
-    .ad-box { width: 100%; height: 100%; border: none; }
-    .btn { 
-      display: block; 
-      width: 100%; 
-      padding: 12px; 
-      background: #007bff; 
-      color: #fff; 
-      text-decoration: none; 
-      border-radius: 8px; 
-      font-weight: bold; 
-      font-size: 1rem; 
-      border: none; 
-      cursor: pointer; 
-      margin-top: 10px; 
-    }
+    .root-warning h2 { font-size: 20px; margin-bottom: 10px; }
+    .root-warning p { font-size: 14px; color: #8b949e; }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h3>Halaman Pengalihan</h3>
-    <p>Anda akan dialihkan secara otomatis dalam <b id="timer">5</b> detik.</p>
-    
-    <div class="ad-container">
+  <!-- Tampilan Peringatan Jika HP Root -->
+  <div id="root-screen" class="root-warning">
+    <h2>Akses Ditolak</h2>
+    <p>Aplikasi ini tidak mendukung perangkat yang di-root (Root/Magisk Detected).</p>
+  </div>
+
+  <!-- Tampilan Utama Dashboard -->
+  <div id="app-screen">
+    <div class="sub-header">CONTROL WEB JELLYBUT</div>
+    <h1>JellybutAdsControler</h1>
+    <div class="status-root" id="root-status">NON-ROOT DEVICE • SYSTEM SECURE</div>
+
+    <div class="card">
+      <div class="card-title">Remote URL Source</div>
+      <input type="text" id="remote-url" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
+      <button class="btn btn-blue" onclick="saveAndRefresh()">Save & Refresh</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Automation</div>
+      <select id="auto-timer">
+        <option value="5">5 Detik (auto pilih)</option>
+        <option value="300">5 menit (auto pilih)</option>
+        <option value="600">10 menit (auto pilih)</option>
+      </select>
+      <div class="btn-group">
+        <button id="btn-start" class="btn btn-start" onclick="startAutomation()">Start</button>
+        <button id="btn-stop" class="btn btn-stop" onclick="stopAutomation()">Stop</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Webview</div>
+      <div class="url-display" id="current-url">https://pusat.coloksgp-bet.cloud/</div>
+      <div class="webview-status" id="wv-status">WebView Berjalan</div>
+      
       <iframe 
         id="ad-frame"
-        class="ad-box" 
         src="" 
         sandbox="allow-scripts allow-same-origin"
         referrerpolicy="no-referrer"
         loading="lazy">
       </iframe>
     </div>
-
-    <button id="redirect-btn" class="btn" onclick="goToDestination()">Lewati / Lanjutkan</button>
   </div>
 
   <script>
+    // 1. Deteksi Root sederhana via JavaScript/UserAgent
+    function checkRoot() {
+      var isRooted = false;
+      // Memeriksa flag/interface tambahan yang disuntikkan oleh Webview HP root (jika ada)
+      if (window.Android && window.Android.isRooted && window.Android.isRooted()) {
+        isRooted = true;
+      }
+      
+      if (isRooted) {
+        document.getElementById('app-screen').style.display = 'none';
+        document.getElementById('root-screen').style.display = 'flex';
+      }
+    }
+    checkRoot();
+
+    // 2. Daftar URL Iframe & Pengalihan
     var safeLandingPages = [
-      "https://pusat.coloksgp-bet.cloud/",
-      "https://sapitotolombok.com/",
-      "https://sga508kan.com/",
-      "https://tiaralimaribu.xyz/",
-      "https://mobile.keytoto-indonesia-my.id/"
+      "https://keytoto.com/",
+      "https://superpetir19.com/",
+      "https://lucu123landasan.co/",
+      "https://evoscuan04.pages.dev/",
+      "https://coloksgp19.com/",
+      "https://yakuza66-gaming.pages.dev/"
     ];
 
-    var destinationUrls = [
-      "https://pusat.coloksgp-bet.cloud/",
-      "https://sapitotolombok.com/",
-      "https://sga508kan.com/",
-      "https://tiaralimaribu.xyz/",
-      "https://mobile.keytoto-indonesia-my.id/"
-    ];
+    var timerId = null;
 
-    // Acak URL Landing Page & URL Tujuan
-    var randomAdIndex = Math.floor(Math.random() * safeLandingPages.length);
-    var selectedAdUrl = safeLandingPages[randomAdIndex];
-
-    var randomDestIndex = Math.floor(Math.random() * destinationUrls.length);
-    var targetUrl = destinationUrls[randomDestIndex].trim();
-
-    // Set src pada iframe
-    document.getElementById('ad-frame').src = selectedAdUrl;
-
-    function goToDestination() {
-      window.location.href = targetUrl;
+    function loadRandomUrl() {
+      var randomIndex = Math.floor(Math.random() * safeLandingPages.length);
+      var selectedUrl = safeLandingPages[randomIndex].trim();
+      
+      document.getElementById('ad-frame').src = selectedUrl;
+      document.getElementById('current-url').innerText = selectedUrl;
     }
 
-    var seconds = 5;
-    var countdown = setInterval(function() {
-      seconds--;
-      document.getElementById('timer').innerText = seconds;
-      if (seconds <= 0) {
-        clearInterval(countdown);
-        goToDestination();
-      }
-    }, 1000);
+    function startAutomation() {
+      loadRandomUrl();
+      var seconds = parseInt(document.getElementById('auto-timer').value);
+      
+      if (timerId) clearInterval(timerId);
+      
+      timerId = setInterval(function() {
+        loadRandomUrl();
+      }, seconds * 1000);
+
+      document.getElementById('wv-status').innerText = "WebView Berjalan (Otomatis)";
+      document.getElementById('btn-start').style.opacity = "0.5";
+      document.getElementById('btn-stop').style.cursor = "pointer";
+      document.getElementById('btn-stop').style.backgroundColor = "#da3633";
+      document.getElementById('btn-stop').style.color = "#ffffff";
+    }
+
+    function stopAutomation() {
+      if (timerId) clearInterval(timerId);
+      document.getElementById('wv-status').innerText = "WebView dihentikan (STOP)";
+      document.getElementById('btn-start').style.opacity = "1";
+      document.getElementById('btn-stop').style.cursor = "not-allowed";
+      document.getElementById('btn-stop').style.backgroundColor = "#21262d";
+      document.getElementById('btn-stop').style.color = "#8b949e";
+    }
+
+    function saveAndRefresh() {
+      loadRandomUrl();
+    }
+
+    // Jalankan pertama kali
+    loadRandomUrl();
   </script>
 
 </body>
