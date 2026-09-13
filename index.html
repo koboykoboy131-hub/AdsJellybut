@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BypassAdsJellybut</title>
+  <title>JellybutAdsControler</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
     
-    .sub-header { font-size: 11px; color: #3fb950; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
+    /* Sub Header & Title dengan Akses Biru */
+    .sub-header { font-size: 11px; color: #58a6ff; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
     h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
     .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
 
+    /* Card Container */
     .card {
       background-color: #161b22;
       border: 1px solid #30363d;
@@ -21,6 +23,7 @@
     }
     .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
 
+    /* Input & Select */
     input[type="text"], select {
       width: 100%;
       padding: 12px;
@@ -32,7 +35,11 @@
       margin-bottom: 10px;
       outline: none;
     }
+    input[type="text"]:focus, select:focus {
+      border-color: #1f6beb;
+    }
 
+    /* Buttons dengan Tema Biru */
     .btn {
       width: 100%;
       padding: 12px;
@@ -43,12 +50,14 @@
       cursor: pointer;
       text-transform: uppercase;
     }
-    .btn-green { background-color: #2ea043; color: #ffffff; }
+    .btn-blue { background-color: #1f6beb; color: #ffffff; }
+    .btn-blue:active { background-color: #1158c7; }
     
     .btn-group { display: flex; gap: 10px; }
-    .btn-start { background-color: #2ea043; color: #ffffff; flex: 1; }
+    .btn-start { background-color: #1f6beb; color: #ffffff; flex: 1; }
     .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; }
 
+    /* WebView Area */
     .url-display {
       font-size: 11px;
       color: #e6edf3;
@@ -56,12 +65,12 @@
       margin-bottom: 5px;
       line-height: 1.4;
     }
-    .webview-status { font-size: 12px; color: #3fb950; margin-bottom: 10px; }
+    .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
 
     iframe {
       width: 100%;
       height: 50vh;
-      border: 1px solid #30363d;
+      border: 1px solid #1f6beb;
       border-radius: 8px;
       background-color: #ffffff;
     }
@@ -70,18 +79,15 @@
 <body>
 
   <div class="sub-header">CONTROL WEB JELLYBUT</div>
-  <h1>AdPingerMulti</h1>
+  <h1>JellybutAdsControler</h1>
   <div class="status-root">ROOT DEVICE • MAGISK ROOT ACCESS OK</div>
 
-  <!-- Section 1: Remote URL Source -->
   <div class="card">
     <div class="card-title">REMOTE URL SOURCE</div>
-    <!-- Ubah atau tempel URL raw kamu di kolom input ini -->
     <input type="text" id="urlSource" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
-    <button class="btn btn-green" onclick="loadRemoteUrls()">SAVE & REFRESH</button>
+    <button class="btn btn-blue" onclick="loadSource()">SAVE & REFRESH</button>
   </div>
 
-  <!-- Section 2: Automation Control -->
   <div class="card">
     <div class="card-title">AUTOMATION</div>
     <select id="timerSelect">
@@ -95,16 +101,14 @@
     </div>
   </div>
 
-  <!-- Section 3: WebView Display -->
   <div class="card">
     <div class="card-title">WEBVIEW</div>
-    <div class="url-display" id="currentUrlText">Memuat URL...</div>
-    <div class="webview-status" id="statusText">WebView aktif: Menunggu perintah...</div>
+    <div class="url-display" id="currentUrlText">Memuat web...</div>
+    <div class="webview-status" id="statusText">WebView aktif: Memuat...</div>
     <iframe id="webFrame" src="about:blank"></iframe>
   </div>
 
   <script>
-    // MASUKKAN DAFTAR URL KAMU DI SINI
     let daftarUrl = [
       "https://keytoto.com/",
       "https://superpetir19.com/",
@@ -123,7 +127,7 @@
 
     function gantiTampilanWeb() {
       if (daftarUrl.length === 0) return;
-      
+
       const urlBaru = daftarUrl[indexWeb];
       frame.src = urlBaru;
       currentUrlText.innerText = urlBaru;
@@ -134,39 +138,6 @@
       };
 
       indexWeb = (indexWeb + 1) % daftarUrl.length;
-    }
-
-    async function loadRemoteUrls() {
-      const sourceInput = document.getElementById("urlSource").value.trim();
-      
-      // Jika input adalah link teks/raw dari github
-      if (sourceInput.startsWith("http")) {
-        try {
-          statusText.innerText = "Membaca daftar URL dari source...";
-          const response = await fetch(sourceInput);
-          const text = await response.text();
-          
-          // Pisahkan baris per URL
-          const urls = text.split("\n").map(u => u.trim()).filter(u => u.length > 0 && u.startsWith("http"));
-          
-          if (urls.length > 0) {
-            daftarUrl = urls;
-            indexWeb = 0;
-            alert("Berhasil memuat " + urls.length + " URL dari Remote Source!");
-            gantiTampilanWeb();
-          } else {
-            // Jika bukan file TXT daftar URL, buka langsung URL tersebut
-            daftarUrl = [sourceInput];
-            indexWeb = 0;
-            gantiTampilanWeb();
-          }
-        } catch (e) {
-          // Jika gagal fetch (misal diblokir CORS), buka URL secara langsung
-          daftarUrl = [sourceInput];
-          indexWeb = 0;
-          gantiTampilanWeb();
-        }
-      }
     }
 
     function startRotation() {
@@ -190,6 +161,15 @@
       document.getElementById("btnStop").style.borderColor = "#30363d";
       document.getElementById("btnStop").style.color = "#8b949e";
       statusText.innerText = "WebView dihentikan (STOP)";
+    }
+
+    function loadSource() {
+      const inputUrl = document.getElementById("urlSource").value;
+      if (inputUrl) {
+        frame.src = inputUrl;
+        currentUrlText.innerText = inputUrl;
+        statusText.innerText = "WebView dimuat dari Source Input";
+      }
     }
 
     // Jalankan awal
