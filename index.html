@@ -8,12 +8,10 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
     
-    /* Sub Header & Title dengan Akses Biru */
     .sub-header { font-size: 11px; color: #58a6ff; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
     h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
     .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
 
-    /* Card Container */
     .card {
       background-color: #161b22;
       border: 1px solid #30363d;
@@ -23,7 +21,6 @@
     }
     .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
 
-    /* Input & Select */
     input[type="text"], select {
       width: 100%;
       padding: 12px;
@@ -35,11 +32,8 @@
       margin-bottom: 10px;
       outline: none;
     }
-    input[type="text"]:focus, select:focus {
-      border-color: #1f6beb;
-    }
+    input[type="text"]:focus, select:focus { border-color: #1f6beb; }
 
-    /* Buttons dengan Tema Biru */
     .btn {
       width: 100%;
       padding: 12px;
@@ -57,7 +51,6 @@
     .btn-start { background-color: #1f6beb; color: #ffffff; flex: 1; }
     .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; }
 
-    /* WebView Area */
     .url-display {
       font-size: 11px;
       color: #e6edf3;
@@ -109,6 +102,7 @@
   </div>
 
   <script>
+    // MASUKKAN DAFTAR URL SIBER ATAU IKLAN YANG BISA DI-IFRAME DI SINI
     let daftarUrl = [
       "https://keytoto.com/",
       "https://superpetir19.com/",
@@ -163,16 +157,39 @@
       statusText.innerText = "WebView dihentikan (STOP)";
     }
 
-    function loadSource() {
-      const inputUrl = document.getElementById("urlSource").value;
-      if (inputUrl) {
-        frame.src = inputUrl;
-        currentUrlText.innerText = inputUrl;
-        statusText.innerText = "WebView dimuat dari Source Input";
+    async function loadSource() {
+      const inputUrl = document.getElementById("urlSource").value.trim();
+      if (!inputUrl) return;
+
+      // Jangan muat jika mengarah ke halaman ini sendiri
+      if (inputUrl.includes("AdsJellybut")) {
+        alert("Gunakan URL situs tujuan atau link raw file txt, bukan link GitHub Pages aplikasi ini.");
+        return;
+      }
+
+      try {
+        statusText.innerText = "Memuat source...";
+        const response = await fetch(inputUrl);
+        const text = await response.text();
+        const urls = text.split("\n").map(u => u.trim()).filter(u => u.startsWith("http"));
+
+        if (urls.length > 0) {
+          daftarUrl = urls;
+          indexWeb = 0;
+          gantiTampilanWeb();
+        } else {
+          daftarUrl = [inputUrl];
+          indexWeb = 0;
+          gantiTampilanWeb();
+        }
+      } catch (e) {
+        daftarUrl = [inputUrl];
+        indexWeb = 0;
+        gantiTampilanWeb();
       }
     }
 
-    // Jalankan awal
+    // Jalankan otomatis
     gantiTampilanWeb();
   </script>
 
