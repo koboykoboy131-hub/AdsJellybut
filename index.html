@@ -2,195 +2,112 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JellybutAdsControler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mengalihkan...</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
-    
-    .sub-header { font-size: 11px; color: #58a6ff; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
-    h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
-    .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
-
-    .card {
-      background-color: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 15px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      text-align: center; 
+      background: #f4f4f9; 
+      padding: 15px; 
     }
-    .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
-
-    input[type="text"], select {
-      width: 100%;
-      padding: 12px;
-      background-color: #0d1117;
-      border: 1px solid #30363d;
-      border-radius: 8px;
-      color: #e6edf3;
-      font-size: 13px;
-      margin-bottom: 10px;
-      outline: none;
+    .container { 
+      max-width: 500px; 
+      margin: 10px auto; 
+      background: #fff; 
+      padding: 20px; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
     }
-    input[type="text"]:focus, select:focus { border-color: #1f6beb; }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      text-transform: uppercase;
+    h3 { font-size: 1.2rem; color: #333; margin-bottom: 8px; }
+    p { font-size: 0.95rem; color: #666; margin-bottom: 15px; }
+    .ad-container { 
+      width: 100%; 
+      height: 350px; 
+      border: 1px solid #e0e0e0; 
+      border-radius: 8px; 
+      overflow: hidden; 
+      margin: 10px 0; 
+      background: #fafafa; 
     }
-    .btn-blue { background-color: #1f6beb; color: #ffffff; }
-    .btn-blue:active { background-color: #1158c7; }
-    
-    .btn-group { display: flex; gap: 10px; }
-    .btn-start { background-color: #1f6beb; color: #ffffff; flex: 1; }
-    .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; }
-
-    .url-display {
-      font-size: 11px;
-      color: #e6edf3;
-      word-break: break-all;
-      margin-bottom: 5px;
-      line-height: 1.4;
-    }
-    .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
-
-    iframe {
-      width: 100%;
-      height: 50vh;
-      border: 1px solid #1f6beb;
-      border-radius: 8px;
-      background-color: #ffffff;
+    .ad-box { width: 100%; height: 100%; border: none; }
+    .btn { 
+      display: block; 
+      width: 100%; 
+      padding: 12px; 
+      background: #007bff; 
+      color: #fff; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      border: none; 
+      cursor: pointer; 
+      margin-top: 10px; 
     }
   </style>
 </head>
 <body>
 
-  <div class="sub-header">CONTROL WEB JELLYBUT</div>
-  <h1>JellybutAdsControler</h1>
-  <div class="status-root">ROOT DEVICE • MAGISK ROOT ACCESS OK</div>
-
-  <div class="card">
-    <div class="card-title">REMOTE URL SOURCE</div>
-    <input type="text" id="urlSource" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
-    <button class="btn btn-blue" onclick="loadSource()">SAVE & REFRESH</button>
-  </div>
-
-  <div class="card">
-    <div class="card-title">AUTOMATION</div>
-    <select id="timerSelect">
-      <option value="5">5 detik (tes cepat)</option>
-      <option value="60">1 menit</option>
-      <option value="300" selected>5 menit (auto pilih)</option>
-    </select>
-    <div class="btn-group">
-      <button class="btn btn-start" id="btnStart" onclick="startRotation()">START</button>
-      <button class="btn btn-stop" id="btnStop" onclick="stopRotation()">STOP</button>
+  <div class="container">
+    <h3>Halaman Pengalihan</h3>
+    <p>Anda akan dialihkan secara otomatis dalam <b id="timer">5</b> detik.</p>
+    
+    <div class="ad-container">
+      <iframe 
+        id="ad-frame"
+        class="ad-box" 
+        src="" 
+        sandbox="allow-scripts allow-same-origin"
+        referrerpolicy="no-referrer"
+        loading="lazy">
+      </iframe>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title">WEBVIEW</div>
-    <div class="url-display" id="currentUrlText">Memuat web...</div>
-    <div class="webview-status" id="statusText">WebView aktif: Memuat...</div>
-    <iframe id="webFrame" src="about:blank"></iframe>
+    <button id="redirect-btn" class="btn" onclick="goToDestination()">Lewati / Lanjutkan</button>
   </div>
 
   <script>
-    // MASUKKAN DAFTAR URL SIBER ATAU IKLAN YANG BISA DI-IFRAME DI SINI
-    let daftarUrl = [
-      "https://keytoto.com/",
-      "https://superpetir19.com/",
-      "https://lucu123landasan.co/",
-      "https://evoscuan04.pages.dev/",
-      "https://coloksgp19.com/",
-      "https://yakuza66-gaming.pages.dev/"
+    var safeLandingPages = [
+      "https://pusat.coloksgp-bet.cloud/",
+      "https://sapitotolombok.com/",
+      "https://sga508kan.com/",
+      "https://tiaralimaribu.xyz/",
+      "https://mobile.keytoto-indonesia-my.id/"
     ];
 
-    let indexWeb = 0;
-    let timerId = null;
+    var destinationUrls = [
+      "https://pusat.coloksgp-bet.cloud/",
+      "https://sapitotolombok.com/",
+      "https://sga508kan.com/",
+      "https://tiaralimaribu.xyz/",
+      "https://mobile.keytoto-indonesia-my.id/"
+    ];
 
-    const frame = document.getElementById("webFrame");
-    const currentUrlText = document.getElementById("currentUrlText");
-    const statusText = document.getElementById("statusText");
+    // Acak URL Landing Page & URL Tujuan
+    var randomAdIndex = Math.floor(Math.random() * safeLandingPages.length);
+    var selectedAdUrl = safeLandingPages[randomAdIndex];
 
-    function gantiTampilanWeb() {
-      if (daftarUrl.length === 0) return;
+    var randomDestIndex = Math.floor(Math.random() * destinationUrls.length);
+    var targetUrl = destinationUrls[randomDestIndex].trim();
 
-      const urlBaru = daftarUrl[indexWeb];
-      frame.src = urlBaru;
-      currentUrlText.innerText = urlBaru;
-      statusText.innerText = "WebView aktif: Memuat halaman...";
+    // Set src pada iframe
+    document.getElementById('ad-frame').src = selectedAdUrl;
 
-      frame.onload = () => {
-        statusText.innerText = "WebView aktif: HTTP/halaman selesai dimuat";
-      };
-
-      indexWeb = (indexWeb + 1) % daftarUrl.length;
+    function goToDestination() {
+      window.location.href = targetUrl;
     }
 
-    function startRotation() {
-      stopRotation();
-      const detik = parseInt(document.getElementById("timerSelect").value);
-      
-      document.getElementById("btnStart").style.opacity = "0.6";
-      document.getElementById("btnStop").style.borderColor = "#f85149";
-      document.getElementById("btnStop").style.color = "#f85149";
-
-      gantiTampilanWeb();
-      timerId = setInterval(gantiTampilanWeb, detik * 1000);
-    }
-
-    function stopRotation() {
-      if (timerId) {
-        clearInterval(timerId);
-        timerId = null;
+    var seconds = 5;
+    var countdown = setInterval(function() {
+      seconds--;
+      document.getElementById('timer').innerText = seconds;
+      if (seconds <= 0) {
+        clearInterval(countdown);
+        goToDestination();
       }
-      document.getElementById("btnStart").style.opacity = "1";
-      document.getElementById("btnStop").style.borderColor = "#30363d";
-      document.getElementById("btnStop").style.color = "#8b949e";
-      statusText.innerText = "WebView dihentikan (STOP)";
-    }
-
-    async function loadSource() {
-      const inputUrl = document.getElementById("urlSource").value.trim();
-      if (!inputUrl) return;
-
-      // Jangan muat jika mengarah ke halaman ini sendiri
-      if (inputUrl.includes("AdsJellybut")) {
-        alert("Gunakan URL situs tujuan atau link raw file txt, bukan link GitHub Pages aplikasi ini.");
-        return;
-      }
-
-      try {
-        statusText.innerText = "Memuat source...";
-        const response = await fetch(inputUrl);
-        const text = await response.text();
-        const urls = text.split("\n").map(u => u.trim()).filter(u => u.startsWith("http"));
-
-        if (urls.length > 0) {
-          daftarUrl = urls;
-          indexWeb = 0;
-          gantiTampilanWeb();
-        } else {
-          daftarUrl = [inputUrl];
-          indexWeb = 0;
-          gantiTampilanWeb();
-        }
-      } catch (e) {
-        daftarUrl = [inputUrl];
-        indexWeb = 0;
-        gantiTampilanWeb();
-      }
-    }
-
-    // Jalankan otomatis
-    gantiTampilanWeb();
+    }, 1000);
   </script>
 
 </body>
