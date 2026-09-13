@@ -3,40 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdsJellybut Rotator</title>
+  <title>AdPingerMulti</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-    body { background-color: #121212; color: white; text-align: center; padding: 10px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
     
-    .header { padding: 10px 0; background: #1e1e1e; border-radius: 8px; margin-bottom: 10px; }
-    .title { font-size: 16px; font-weight: bold; color: #fff; word-break: break-all; }
-    .status { font-size: 13px; color: #00ffcc; margin-top: 4px; }
-    .timer { font-size: 12px; color: #ffcc00; margin-top: 2px; font-weight: bold; }
+    /* Header Top */
+    .sub-header { font-size: 11px; color: #3fb950; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
+    h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
+    .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
 
-    /* Ukuran menyesuaikan layar HP */
+    /* Card Container */
+    .card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.5px; }
+
+    /* Input & Select */
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      color: #e6edf3;
+      font-size: 13px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .btn-green { background-color: #2ea043; color: #ffffff; }
+    .btn-green:active { background-color: #238636; }
+    
+    .btn-group { display: flex; gap: 10px; }
+    .btn-start { background-color: #2ea043; color: #ffffff; flex: 1; }
+    .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; }
+
+    /* WebView Area */
+    .url-display {
+      font-size: 11px;
+      color: #e6edf3;
+      word-break: break-all;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+    .webview-status { font-size: 12px; color: #3fb950; margin-bottom: 10px; }
+
     iframe {
       width: 100%;
-      height: 80vh;
-      border: 2px solid #333;
+      height: 50vh;
+      border: 1px solid #30363d;
       border-radius: 8px;
-      background: white;
+      background-color: #ffffff;
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="title" id="titleText">Memuat Web...</div>
-    <div class="status" id="statusText">Situs 1 dari 5</div>
-    <div class="timer" id="timerText">Berganti dalam: 60 detik</div>
+  <!-- Top Info -->
+  <div class="sub-header">ANONYMOUS WEB CONTROL</div>
+  <h1>AdPingerMulti</h1>
+  <div class="status-root">ROOT DEVICE • MAGISK ROOT ACCESS OK</div>
+
+  <!-- Section 1: Remote URL Source -->
+  <div class="card">
+    <div class="card-title">REMOTE URL SOURCE</div>
+    <input type="text" id="urlSource" value="https://id.wikipedia.org">
+    <button class="btn btn-green" onclick="loadSource()">SAVE & REFRESH</button>
   </div>
 
-  <!-- Layar penampil web -->
-  <iframe id="webFrame" src=""></iframe>
+  <!-- Section 2: Automation Control -->
+  <div class="card">
+    <div class="card-title">AUTOMATION</div>
+    <select id="timerSelect">
+      <option value="5">5 detik (tes cepat)</option>
+      <option value="60">1 menit</option>
+      <option value="300" selected>5 menit (auto pilih)</option>
+      <option value="600">10 menit</option>
+    </select>
+    <div class="btn-group">
+      <button class="btn btn-start" id="btnStart" onclick="startRotation()">START</button>
+      <button class="btn btn-stop" id="btnStop" onclick="stopRotation()">STOP</button>
+    </div>
+  </div>
+
+  <!-- Section 3: WebView Display -->
+  <div class="card">
+    <div class="card-title">WEBVIEW</div>
+    <div class="url-display" id="currentUrlText">https://id.wikipedia.org</div>
+    <div class="webview-status" id="statusText">WebView aktif: HTTP/halaman selesai dimuat</div>
+    <iframe id="webFrame" src="https://id.wikipedia.org"></iframe>
+  </div>
 
   <script>
-    // Daftar URL publik yang bisa dibuka dalam iframe
-    const daftarUrl = [
+    // Daftar URL default
+    let daftarUrl = [
       "https://keytoto.com/",
       "https://superpetir19.com/",
       "https://lucu123landasan.co/",
@@ -45,37 +121,57 @@
       "https://yakuza66-gaming.pages.dev/"
     ];
 
-    let indeksSekarang = 0;
-    let sisaWaktu = 60; // Hitungan mundur per situs (60 detik)
+    let indexWeb = 0;
+    let timerId = null;
 
     const frame = document.getElementById("webFrame");
-    const titleText = document.getElementById("titleText");
+    const currentUrlText = document.getElementById("currentUrlText");
     const statusText = document.getElementById("statusText");
-    const timerText = document.getElementById("timerText");
 
-    function gantiWeb() {
-      const urlTujuan = daftarUrl[indeksSekarang];
-      frame.src = urlTujuan;
-      
-      titleText.innerText = "Situs: " + urlTujuan;
-      statusText.innerText = `Menampilkan situs ${indeksSekarang + 1} dari ${daftarUrl.length}`;
-      
-      indeksSekarang = (indeksSekarang + 1) % daftarUrl.length;
-      sisaWaktu = 60; 
+    function gantiTampilanWeb() {
+      const urlBaru = daftarUrl[indexWeb];
+      frame.src = urlBaru;
+      currentUrlText.innerText = urlBaru;
+      statusText.innerText = "WebView aktif: Memuat halaman...";
+
+      frame.onload = () => {
+        statusText.innerText = "WebView aktif: HTTP/halaman selesai dimuat";
+      };
+
+      indexWeb = (indexWeb + 1) % daftarUrl.length;
     }
 
-    // Timer hitung mundur 1 detik
-    setInterval(() => {
-      sisaWaktu--;
-      timerText.innerText = `Berganti dalam: ${sisaWaktu} detik`;
+    function startRotation() {
+      stopRotation(); // Hentikan timer sebelumnya jika ada
+      const detik = parseInt(document.getElementById("timerSelect").value);
+      
+      document.getElementById("btnStart").style.opacity = "0.6";
+      document.getElementById("btnStop").style.borderColor = "#f85149";
+      document.getElementById("btnStop").style.color = "#f85149";
 
-      if (sisaWaktu <= 0) {
-        gantiWeb();
+      gantiTampilanWeb();
+      timerId = setInterval(gantiTampilanWeb, detik * 1000);
+    }
+
+    function stopRotation() {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
       }
-    }, 1000);
+      document.getElementById("btnStart").style.opacity = "1";
+      document.getElementById("btnStop").style.borderColor = "#30363d";
+      document.getElementById("btnStop").style.color = "#8b949e";
+      statusText.innerText = "WebView dihentikan (STOP)";
+    }
 
-    // Jalankan pertama kali
-    gantiWeb();
+    function loadSource() {
+      const inputUrl = document.getElementById("urlSource").value;
+      if (inputUrl) {
+        frame.src = inputUrl;
+        currentUrlText.innerText = inputUrl;
+        statusText.innerText = "WebView dimuat dari Source Input";
+      }
+    }
   </script>
 
 </body>
