@@ -108,12 +108,12 @@
       <div class="url-display" id="current-url">https://pusat.coloksgp-bet.cloud/</div>
       <div class="webview-status" id="wv-status">WebView Berjalan</div>
       
-      <!-- Sandbox diaktifkan kembali tanpa izin allow-top-navigation/allow-popups untuk memblokir auto-redirect ke Play Store -->
+      <!-- Sandbox diisolasi ketat hanya allow-scripts untuk menghentikan pemanggilan Mintegral -->
       <iframe 
         id="ad-frame"
         src="" 
-        sandbox="allow-scripts allow-same-origin allow-forms"
-        allow="autoplay; encrypted-media; fullscreen"
+        sandbox="allow-scripts"
+        allow="fullscreen"
         loading="eager">
       </iframe>
     </div>
