@@ -35,7 +35,7 @@
     .url-display { font-size: 11px; color: #e6edf3; word-break: break-all; margin-bottom: 5px; }
     .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
 
-    /* Iframe dioptimalkan dengan Hardware Acceleration & Image Rendering */
+    /* Iframe dioptimalkan dengan Hardware Acceleration & Rendering Visual */
     iframe { 
       width: 100%; 
       height: 400px; 
@@ -43,7 +43,7 @@
       border-radius: 8px; 
       background-color: #ffffff;
       
-      /* Optimasi Visual agar lebih tajam */
+      /* Optimasi Visual */
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
       transform: translateZ(0);
@@ -108,10 +108,11 @@
       <div class="url-display" id="current-url">https://pusat.coloksgp-bet.cloud/</div>
       <div class="webview-status" id="wv-status">WebView Berjalan</div>
       
-      <!-- Akses Iframe Penuh tanpa pembatasan sandbox untuk rendering maksimal -->
+      <!-- Sandbox diaktifkan kembali tanpa izin allow-top-navigation/allow-popups untuk memblokir auto-redirect ke Play Store -->
       <iframe 
         id="ad-frame"
         src="" 
+        sandbox="allow-scripts allow-same-origin allow-forms"
         allow="autoplay; encrypted-media; fullscreen"
         loading="eager">
       </iframe>
