@@ -3,191 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>JellybutAdsController</title>
+  <title>JellybutAdsControler</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
-
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #0d1117; color: #c9d1d9; padding: 15px; }
     
-    body { 
-      background-color: #0b0c0e; 
-      background-image: 
-        radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.15), transparent 70%),
-        radial-gradient(circle at 50% 80%, rgba(139, 0, 0, 0.2), transparent 80%);
-      color: #d4af37; 
-      padding: 15px; 
-      min-height: 100vh;
-    }
+    .sub-header { font-size: 11px; color: #58a6ff; letter-spacing: 1px; font-weight: bold; margin-bottom: 2px; }
+    h1 { font-size: 24px; color: #ffffff; font-weight: bold; margin-bottom: 2px; }
+    .status-root { font-size: 10px; color: #8b949e; letter-spacing: 0.5px; margin-bottom: 15px; }
 
-    /* Header kuil kuno */
-    .header-container { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #5c4a1e; padding-bottom: 10px; }
-    h1 { 
-      font-family: 'Cinzel', serif, sans-serif;
-      font-size: 20px; 
-      color: #f3e5ab; 
-      font-weight: 700; 
-      letter-spacing: 1px;
-      text-shadow: 2px 2px 4px #000, 0 0 10px rgba(243, 229, 171, 0.3);
-    }
-    .status-root { font-size: 9px; color: #a89f91; letter-spacing: 1px; margin-top: 4px; font-weight: 600; text-transform: uppercase; }
+    .card { background-color: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+    .card-title { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 
-    /* Kartu bertema batu berukir */
-    .card { 
-      background: linear-gradient(135deg, #1c1d22, #141518); 
-      border: 2px solid #5c4a1e; 
-      border-radius: 10px; 
-      padding: 12px; 
-      margin-bottom: 12px; 
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.9);
-      position: relative;
-    }
-    .card-title { 
-      font-family: 'Cinzel', serif;
-      font-size: 10px; 
-      color: #d4af37; 
-      text-transform: uppercase; 
-      font-weight: 700; 
-      margin-bottom: 8px; 
-      letter-spacing: 1px; 
-    }
-
-    /* Input & Select gaya ukiran batu */
     input[type="text"], select {
-      width: 100%; 
-      padding: 10px 12px; 
-      background-color: #0d0e11; 
-      border: 1px solid #7a6328;
-      border-radius: 6px; 
-      color: #f3e5ab; 
-      font-size: 12px; 
-      margin-bottom: 10px; 
-      outline: none;
-      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+      width: 100%; padding: 12px; background-color: #0d1117; border: 1px solid #30363d;
+      border-radius: 8px; color: #e6edf3; font-size: 13px; margin-bottom: 10px; outline: none;
     }
 
-    /* Tombol Utama (Emas Kuno) */
     .btn {
-      display: block; 
-      width: 100%; 
-      padding: 12px; 
-      border: 1px solid #ffe89c; 
-      border-radius: 6px;
-      font-family: 'Cinzel', serif;
-      font-weight: 700; 
-      font-size: 13px; 
-      cursor: pointer; 
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.2s ease;
+      display: block; width: 100%; padding: 12px; border: none; border-radius: 8px;
+      font-weight: bold; font-size: 14px; cursor: pointer; text-transform: uppercase;
     }
-    
-    .btn-gold { 
-      background: linear-gradient(180deg, #c59b27, #785a0d); 
-      color: #fff8dc; 
-      text-shadow: 1px 1px 2px #000;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(197, 155, 39, 0.4);
-    }
-    .btn-gold:active { transform: scale(0.98); }
+    .btn-blue { background-color: #1f6feb; color: #ffffff; }
+    .btn-blue:active { background-color: #1158c7; }
+    .btn-clear { background: none; border: none; color: #ff7b72; font-size: 10px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
     
     .btn-group { display: flex; gap: 10px; }
-    
-    /* Tombol Start (Batu Hijau Jade/Emerald) */
-    .btn-start { 
-      background: linear-gradient(180deg, #1e5c33, #0b2b16); 
-      color: #a3e0b5; 
-      border: 1px solid #34a853;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(52, 168, 83, 0.3);
-      flex: 1; 
+    .btn-start { background-color: #1f6feb; color: #ffffff; flex: 1; }
+    .btn-stop { background-color: #21262d; color: #8b949e; border: 1px solid #30363d; flex: 1; cursor: not-allowed; }
+
+    .url-display { font-size: 11px; color: #e6edf3; word-break: break-all; margin-bottom: 5px; }
+    .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
+
+    iframe { width: 100%; height: 350px; border: 1px solid #1f6feb; border-radius: 8px; background-color: #ffffff; }
+
+    /* Style Tambahan untuk Log Container */
+    .log-box {
+      max-height: 150px; overflow-y: auto; background-color: #0d1117;
+      border: 1px solid #30363d; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 11px;
     }
+    .log-item { margin-bottom: 6px; border-bottom: 1px solid #21262d; padding-bottom: 4px; word-break: break-all; }
+    .log-time { color: #8b949e; margin-right: 6px; }
+    .log-url { color: #7ee787; }
 
-    /* Tombol Stop (Batu Abu Gelap) */
-    .btn-stop { 
-      background: linear-gradient(180deg, #2c2d33, #16171a); 
-      color: #7a7d85; 
-      border: 1px solid #44464e; 
-      flex: 1; 
-      cursor: not-allowed; 
-    }
-
-    .url-display { font-size: 11px; color: #d4af37; word-break: break-all; margin-bottom: 4px; }
-    .webview-status { font-size: 11px; color: #a89f91; margin-bottom: 8px; }
-
-    /* Frame WebView berpola bingkai ukiran */
-    .iframe-wrapper {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 3px solid #5c4a1e;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-    }
-
-    iframe { width: 100%; height: 320px; border: none; background-color: #ffffff; display: block; }
-
-    /* Modal Root */
+    /* Modal Pemblokiran Root */
     .root-warning {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #0b0c0e; color: #dc2626; padding: 30px 20px; text-align: center;
+      background: #0d1117; color: #ff7b72; padding: 30px 20px; text-align: center;
       z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
     }
-    .root-warning h2 { font-family: 'Cinzel', serif; font-size: 20px; margin-bottom: 10px; }
-    .root-warning p { font-size: 13px; color: #a89f91; }
+    .root-warning h2 { font-size: 20px; margin-bottom: 10px; }
+    .root-warning p { font-size: 14px; color: #8b949e; }
   </style>
 </head>
 <body>
 
+  <!-- Tampilan Peringatan Jika HP Root -->
   <div id="root-screen" class="root-warning">
-    <h2>AKSES DITOLAK</h2>
-    <p>Aplikasi tidak mendukung perangkat yang di-root.</p>
+    <h2>Akses Ditolak</h2>
+    <p>Aplikasi ini tidak mendukung perangkat yang di-root (Root/Magisk Detected).</p>
   </div>
 
+  <!-- Tampilan Utama Dashboard -->
   <div id="app-screen">
-    <div class="header-container">
-      <h1>JellybutAdsController</h1>
-      <div class="status-root">NON-ROOT DEVICE • SYSTEM SECURE</div>
+    <div class="sub-header">CONTROL WEB JELLYBUT</div>
+    <h1>JellybutAdsControler</h1>
+    <div class="status-root" id="root-status">NON-ROOT DEVICE • SYSTEM SECURE</div>
+
+    <div class="card">
+      <div class="card-title">Remote URL Source</div>
+      <input type="text" id="remote-url" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
+      <button class="btn btn-blue" onclick="saveAndRefresh()">Save & Refresh</button>
     </div>
 
     <div class="card">
-      <div class="card-title">REMOTE URL SOURCE (ROTASI OTOMATIS)</div>
-      <input type="text" id="remote-url" value="https://superpetir19.com/">
-      <button class="btn btn-gold" onclick="saveAndRefresh()">SAVE & REFRESH</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">AUTOMATION</div>
+      <div class="card-title">Automation</div>
       <select id="auto-timer">
         <option value="5">5 Detik (auto pilih)</option>
         <option value="300">5 menit (auto pilih)</option>
         <option value="600">10 menit (auto pilih)</option>
       </select>
       <div class="btn-group">
-        <button id="btn-start" class="btn btn-start" onclick="startAutomation()">START</button>
-        <button id="btn-stop" class="btn btn-stop" onclick="stopAutomation()">STOP</button>
+        <button id="btn-start" class="btn btn-start" onclick="startAutomation()">Start</button>
+        <button id="btn-stop" class="btn btn-stop" onclick="stopAutomation()">Stop</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">WEBVIEW</div>
-      <div class="url-display" id="current-url">https://superpetir19.com/</div>
+      <div class="card-title">Webview</div>
+      <div class="url-display" id="current-url">https://pusat.coloksgp-bet.cloud/</div>
       <div class="webview-status" id="wv-status">WebView Berjalan</div>
       
-      <div class="iframe-wrapper">
-        <iframe 
-          id="ad-frame"
-          src="" 
-          sandbox="allow-scripts allow-same-origin"
-          referrerpolicy="no-referrer"
-          loading="lazy">
-        </iframe>
+      <iframe 
+        id="ad-frame"
+        src="" 
+        sandbox="allow-scripts allow-same-origin"
+        referrerpolicy="no-referrer"
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <!-- Panel Baru: Log Riwayat URL -->
+    <div class="card">
+      <div class="card-title">
+        <span>Activity Log</span>
+        <button class="btn-clear" onclick="clearLogs()">Clear Log</button>
+      </div>
+      <div class="log-box" id="log-container">
+        <!-- Item log akan muncul di sini secara otomatis -->
       </div>
     </div>
   </div>
 
   <script>
+    // 1. Deteksi Root sederhana via JavaScript/UserAgent
     function checkRoot() {
       var isRooted = false;
       if (window.Android && window.Android.isRooted && window.Android.isRooted()) {
         isRooted = true;
       }
+      
       if (isRooted) {
         document.getElementById('app-screen').style.display = 'none';
         document.getElementById('root-screen').style.display = 'flex';
@@ -195,6 +130,7 @@
     }
     checkRoot();
 
+    // 2. Daftar URL Iframe & Pengalihan
     var safeLandingPages = [
       "https://keytoto.com/",
       "https://superpetir19.com/",
@@ -223,12 +159,34 @@
 
     var timerId = null;
 
+    // Fungsi Tambahan: Menambahkan entri ke panel Log
+    function addLog(url) {
+      var logContainer = document.getElementById('log-container');
+      var now = new Date();
+      var timeString = now.toTimeString().split(' ')[0]; // Format HH:MM:SS
+      
+      var logEntry = document.createElement('div');
+      logEntry.className = 'log-item';
+      logEntry.innerHTML = '<span class="log-time">[' + timeString + ']</span><span class="log-url">' + url + '</span>';
+      
+      // Menambahkan log baru di urutan paling atas
+      logContainer.insertBefore(logEntry, logContainer.firstChild);
+    }
+
+    // Fungsi Tambahan: Menghapus seluruh log
+    function clearLogs() {
+      document.getElementById('log-container').innerHTML = '';
+    }
+
     function loadRandomUrl() {
       var randomIndex = Math.floor(Math.random() * safeLandingPages.length);
       var selectedUrl = safeLandingPages[randomIndex].trim();
       
       document.getElementById('ad-frame').src = selectedUrl;
       document.getElementById('current-url').innerText = selectedUrl;
+      
+      // Panggil pencatatan log setiap kali URL baru dimuat
+      addLog(selectedUrl);
     }
 
     function startAutomation() {
@@ -242,39 +200,26 @@
       }, seconds * 1000);
 
       document.getElementById('wv-status').innerText = "WebView Berjalan (Otomatis)";
-      document.getElementById('btn-start').style.opacity = "0.7";
-      
-      var btnStop = document.getElementById('btn-stop');
-      btnStop.style.cursor = "pointer";
-      btnStop.style.background = "linear-gradient(180deg, #8b0000, #4a0000)";
-      btnStop.style.color = "#ffcdd2";
-      btnStop.style.border = "1px solid #ef5350";
-      btnStop.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.6), 0 0 8px rgba(239, 83, 80, 0.4)";
+      document.getElementById('btn-start').style.opacity = "0.5";
+      document.getElementById('btn-stop').style.cursor = "pointer";
+      document.getElementById('btn-stop').style.backgroundColor = "#da3633";
+      document.getElementById('btn-stop').style.color = "#ffffff";
     }
 
     function stopAutomation() {
       if (timerId) clearInterval(timerId);
       document.getElementById('wv-status').innerText = "WebView dihentikan (STOP)";
       document.getElementById('btn-start').style.opacity = "1";
-      
-      var btnStop = document.getElementById('btn-stop');
-      btnStop.style.cursor = "not-allowed";
-      btnStop.style.background = "linear-gradient(180deg, #2c2d33, #16171a)";
-      btnStop.style.color = "#7a7d85";
-      btnStop.style.border = "1px solid #44464e";
-      btnStop.style.boxShadow = "none";
+      document.getElementById('btn-stop').style.cursor = "not-allowed";
+      document.getElementById('btn-stop').style.backgroundColor = "#21262d";
+      document.getElementById('btn-stop').style.color = "#8b949e";
     }
 
     function saveAndRefresh() {
-      var manualUrl = document.getElementById('remote-url').value;
-      if (manualUrl) {
-        document.getElementById('ad-frame').src = manualUrl;
-        document.getElementById('current-url').innerText = manualUrl;
-      } else {
-        loadRandomUrl();
-      }
+      loadRandomUrl();
     }
 
+    // Jalankan pertama kali
     loadRandomUrl();
   </script>
 
