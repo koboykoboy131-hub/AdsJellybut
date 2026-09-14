@@ -35,8 +35,20 @@
     .url-display { font-size: 11px; color: #e6edf3; word-break: break-all; margin-bottom: 5px; }
     .webview-status { font-size: 12px; color: #58a6ff; margin-bottom: 10px; }
 
-    /* Iframe disesuaikan agar tampilan web/iklan maksimal */
-    iframe { width: 100%; height: 400px; border: 1px solid #1f6feb; border-radius: 8px; background-color: #ffffff; }
+    /* Iframe dioptimalkan dengan Hardware Acceleration & Image Rendering */
+    iframe { 
+      width: 100%; 
+      height: 400px; 
+      border: 1px solid #1f6feb; 
+      border-radius: 8px; 
+      background-color: #ffffff;
+      
+      /* Optimasi Visual agar lebih tajam */
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
 
     /* Style Log Container */
     .log-box {
@@ -79,9 +91,8 @@
 
     <div class="card">
       <div class="card-title">Automation</div>
-      <!-- Pilihan timer diperbarui ke durasi yang lebih stabil untuk pemuatan iklan -->
       <select id="auto-timer">
-        <option value="30">30 Detik (Rekomendasi Iklan)</option>
+        <option value="30">30 Detik (Rekomendasi Waktu Memuat)</option>
         <option value="60">1 Menit</option>
         <option value="300">5 Menit</option>
         <option value="600">10 Menit</option>
@@ -97,7 +108,7 @@
       <div class="url-display" id="current-url">https://pusat.coloksgp-bet.cloud/</div>
       <div class="webview-status" id="wv-status">WebView Berjalan</div>
       
-      <!-- Pembatasan sandbox dan no-referrer dihapus agar skrip iklan aktif normal -->
+      <!-- Akses Iframe Penuh tanpa pembatasan sandbox untuk rendering maksimal -->
       <iframe 
         id="ad-frame"
         src="" 
