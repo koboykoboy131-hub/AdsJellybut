@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JellybutAdsControler + GAS Connected</title>
-
+    <title>JellybutAdsControler</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,11 +20,33 @@
             margin: 0 auto;
         }
 
-        .header { margin-bottom: 20px; }
-        .sub-header { font-size: 11px; color: #3b82f6; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-        .title { font-size: 24px; font-weight: 800; margin: 4px 0; }
-        .status-badge { font-size: 11px; color: #10b981; font-weight: 600; letter-spacing: 0.5px; }
+        /* Header */
+        .header {
+            margin-bottom: 20px;
+        }
 
+        .sub-header {
+            font-size: 11px;
+            color: #3b82f6;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 4px 0;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Card / Container */
         .card {
             background-color: #111827;
             border: 1px solid #1f2937;
@@ -34,9 +55,16 @@
             margin-bottom: 16px;
         }
 
-        .card-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .card-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
 
-        .select-box {
+        /* Input & Select */
+        .input-box, .select-box {
             width: 100%;
             padding: 12px 14px;
             background-color: #0b0f19;
@@ -48,8 +76,11 @@
             outline: none;
         }
 
-        .select-box:focus { border-color: #2563eb; }
+        .input-box:focus, .select-box:focus {
+            border-color: #2563eb;
+        }
 
+        /* Buttons */
         .btn {
             width: 100%;
             padding: 14px;
@@ -61,14 +92,30 @@
             transition: opacity 0.2s;
         }
 
-        .btn:active { opacity: 0.8; }
-        .btn-blue { background-color: #2563eb; color: white; }
-        .btn-green { background-color: #16a34a; color: white; margin-top: 6px; }
-        .btn-red { background-color: #dc2626; color: white; }
+        .btn:active {
+            opacity: 0.8;
+        }
 
-        .button-group { display: flex; gap: 10px; }
-        .button-group .btn { flex: 1; }
+        .btn-blue {
+            background-color: #2563eb;
+            color: white;
+        }
 
+        .btn-red {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-group .btn {
+            flex: 1;
+        }
+
+        /* Activity Log Console */
         .log-console {
             background-color: #05070d;
             border: 1px solid #1f2937;
@@ -84,14 +131,36 @@
             gap: 4px;
         }
 
-        .log-entry { line-height: 1.4; word-break: break-all; }
-        .log-entry .time { color: #6b7280; }
-        .log-entry.system { color: #3b82f6; }
-        .log-entry.alert { color: #ef4444; }
-        .log-entry.gas { color: #f59e0b; }
+        .log-entry {
+            line-height: 1.4;
+            word-break: break-all;
+        }
 
-        .url-display { font-size: 13px; color: #60a5fa; word-break: break-all; margin-bottom: 4px; }
-        .status-text { font-size: 12px; color: #9ca3af; margin-bottom: 12px; }
+        .log-entry .time {
+            color: #6b7280;
+        }
+
+        .log-entry.system {
+            color: #3b82f6;
+        }
+
+        .log-entry.alert {
+            color: #ef4444;
+        }
+
+        /* WebView Container */
+        .url-display {
+            font-size: 13px;
+            color: #60a5fa;
+            word-break: break-all;
+            margin-bottom: 4px;
+        }
+
+        .status-text {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
 
         .webview-box {
             width: 100%;
@@ -102,7 +171,11 @@
             border: 1px solid #1f2937;
         }
 
-        .webview-box iframe { width: 100%; height: 100%; border: none; }
+        .webview-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -111,14 +184,14 @@
     <div class="header">
         <div class="sub-header">CONTROL WEB JELLYBUT</div>
         <div class="title">JellybutAdsControler</div>
-        <div class="status-badge">● GOOGLE APPS SCRIPT CONNECTED</div>
+        <div class="status-badge">NON-ROOT DEVICE • SYSTEM SECURE</div>
     </div>
 
-    <!-- Google Apps Script Control Card -->
+    <!-- Remote Source Card -->
     <div class="card">
-        <div class="card-label">GOOGLE APPS SCRIPT BACKEND</div>
-        <p style="font-size: 11px; color: #9ca3af; margin-bottom: 10px;">URL GAS aktif & terintegrasi secara otomatis di server.</p>
-        <button class="btn btn-green" onclick="triggerGAS()">TRIGGER URLFETCHAPP (GAS)</button>
+        <div class="card-label">REMOTE URL SOURCE</div>
+        <input type="text" id="remote-url" class="input-box" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
+        <button class="btn btn-blue" onclick="saveAndRefresh()">SAVE & REFRESH</button>
     </div>
 
     <!-- Automation Card -->
@@ -136,7 +209,7 @@
         </div>
     </div>
 
-    <!-- Activity Log Console -->
+    <!-- Activity Log Card -->
     <div class="card">
         <div class="card-label">SYSTEM & ROTATION LOG</div>
         <div id="log-console" class="log-console"></div>
@@ -144,20 +217,16 @@
 
     <!-- WebView Section -->
     <div class="card">
-        <div class="card-label">WEBVIEW DISPLAY</div>
+        <div class="card-label">WEBVIEW</div>
         <div id="current-url" class="url-display">-</div>
         <div id="wv-status" class="status-text">WebView Berjalan (Otomatis)</div>
         
         <div class="webview-box">
-            <iframe id="ad-frame" src="" title="WebView Display" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+            <iframe id="ad-frame" src="" title="WebView Display"></iframe>
         </div>
     </div>
 
     <script>
-        // URL Web App Google Apps Script Baru Milikmu
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpgunv7ZkN4uky2NCDrqsLMHNGu1BC_4x9uTgy6IXoelKHgqWmgl-9T2ET0jUQAZ4M/exec";
-
-        // Daftar URL Web Rotasi
         const urlList = [
             "https://keytoto.com/",
             "https://superpetir19.com/",
@@ -185,8 +254,8 @@
         ];
 
         let autoInterval = null;
-        let currentActiveUrl = "";
 
+        // Fungsi mencatat pesan log ke konsol tampilan
         function addLog(message, type = 'normal') {
             const consoleBox = document.getElementById('log-console');
             const timeString = new Date().toLocaleTimeString('id-ID');
@@ -196,35 +265,27 @@
             entry.innerHTML = `<span class="time">[${timeString}]</span> ${message}`;
             
             consoleBox.appendChild(entry);
-            consoleBox.scrollTop = consoleBox.scrollHeight;
+            consoleBox.scrollTop = consoleBox.scrollHeight; // Auto-scroll ke bawah
         }
 
+        // Fungsi ganti URL acak
         function changeRandomUrl() {
             const randomIndex = Math.floor(Math.random() * urlList.length);
-            currentActiveUrl = urlList[randomIndex];
+            const selectedUrl = urlList[randomIndex];
             
-            document.getElementById('ad-frame').src = currentActiveUrl;
-            document.getElementById('current-url').innerText = currentActiveUrl;
+            document.getElementById('ad-frame').src = selectedUrl;
+            document.getElementById('current-url').innerText = selectedUrl;
             
-            addLog(`URL Dimuat: ${currentActiveUrl}`);
+            addLog(`URL Dimuat: ${selectedUrl}`);
         }
 
-        // Fungsi memicu GAS menggunakan mode 'no-cors' agar lolos dari blokir CORS browser HP
-        function triggerGAS() {
-            addLog("Mengirim sinyal ke Google Apps Script...", "gas");
-
-            fetch(`${GAS_WEB_APP_URL}?url=${encodeURIComponent(currentActiveUrl)}`, {
-                method: 'GET',
-                mode: 'no-cors'
-            })
-            .then(() => {
-                addLog("GAS Response: Sinyal berhasil terkirim ke Server!", "gas");
-            })
-            .catch(err => {
-                addLog(`GAS Error: Hubungan gagal (${err.message})`, "alert");
-            });
+        // Manual Refresh
+        function saveAndRefresh() {
+            addLog("Manual Save & Refresh dipicu.", "system");
+            changeRandomUrl();
         }
 
+        // Start Automation
         function startAutomation() {
             if (autoInterval) clearInterval(autoInterval);
             
@@ -240,6 +301,7 @@
             addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
         }
 
+        // Stop Automation
         function stopAutomation() {
             if (autoInterval) {
                 clearInterval(autoInterval);
@@ -251,8 +313,9 @@
             addLog("Otomatisasi dihentikan oleh pengguna.", "alert");
         }
 
+        // Inisialisasi awal
         window.onload = function() {
-            addLog("Sistem kontrol siap. GAS Connected.", "system");
+            addLog("Sistem kontrol siap. Memulai rotasi...", "system");
             startAutomation();
         };
     </script>
