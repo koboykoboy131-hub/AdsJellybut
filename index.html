@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JellybutAdsControler + GAS Connected</title>
-
-    <!-- [SLOT 1] SCRIPT IKLAN HEADER / DIRECT LINK (JIKA ADA) -->
+    <title>Jellybut Controler - High eCPM Trigger</title>
 
     <style>
         * {
@@ -37,20 +35,6 @@
         }
 
         .card-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 12px; letter-spacing: 0.5px; }
-
-        .ad-container {
-            width: 100%;
-            min-height: 50px;
-            background-color: #05070d;
-            border: 1px dashed #374151;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            overflow: hidden;
-            text-align: center;
-        }
 
         .select-box {
             width: 100%;
@@ -123,14 +107,9 @@
 </head>
 <body>
 
-    <!-- Slot Iklan Banner Atas -->
-    <div class="ad-container" id="ad-slot-top">
-        <span style="font-size: 11px; color: #6b7280;">[ Slot Iklan Banner Atas ]</span>
-    </div>
-
     <!-- Header Section -->
     <div class="header">
-        <div class="sub-header">CONTROL WEB JELLYBUT</div>
+        <div class="sub-header">HIGH eCPM AD TARGETING ENGINE</div>
         <div class="title">JellybutAdsControler</div>
         <div class="status-badge">● GOOGLE APPS SCRIPT CONNECTED</div>
     </div>
@@ -144,22 +123,16 @@
 
     <!-- Automation Card -->
     <div class="card">
-        <div class="card-label">AUTOMATION</div>
+        <div class="card-label">AUTOMATION (RECOMMENDED: 2 - 5 MINS)</div>
         <select id="timer-select" class="select-box">
-            <option value="60000" selected>1 Menit</option>
-            <option value="120000">2 Menit</option>
-            <option value="300000">5 Menit</option>
-            <option value="30000">30 Detik</option>
+            <option value="120000" selected>2 Menit (Stabil & Natural)</option>
+            <option value="300000">5 Menit (Optimal eCPM)</option>
+            <option value="60000">1 Menit</option>
         </select>
         <div class="button-group">
             <button class="btn btn-blue" onclick="startAutomation()">START</button>
             <button class="btn btn-red" onclick="stopAutomation()">STOP</button>
         </div>
-    </div>
-
-    <!-- Slot Iklan Banner Tengah -->
-    <div class="ad-container" id="ad-slot-middle">
-        <span style="font-size: 11px; color: #6b7280;">[ Slot Iklan Banner Tengah ]</span>
     </div>
 
     <!-- Activity Log Console -->
@@ -170,12 +143,11 @@
 
     <!-- WebView Section -->
     <div class="card">
-        <div class="card-label">WEBVIEW DISPLAY</div>
+        <div class="card-label">WEBVIEW DISPLAY (HIGH-VALUE CONTENT)</div>
         <div id="current-url" class="url-display">-</div>
         <div id="wv-status" class="status-text">WebView Berjalan (Otomatis)</div>
         
         <div class="webview-box">
-            <!-- Sandbox dihapus agar iframe memuat halaman tanpa blokir skrip internal -->
             <iframe id="ad-frame" src="" title="WebView Display" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
@@ -184,34 +156,22 @@
         // URL Web App Google Apps Script
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpgunv7ZkN4uky2NCDrqsLMHNGu1BC_4x9uTgy6IXoelKHgqWmgl-9T2ET0jUQAZ4M/exec";
 
-        // Daftar URL Web Rotasi (Bisa diisi 1 URL atau banyak URL)
+        // Target URL Niche High eCPM (Asuransi, Keuangan, Fintech, Cloud, Trading)
         const urlList = [
-            "https://keytoto.com/",
-            "https://superpetir19.com/",
-            "https://lucu123landasan.co/",
-            "https://evoscuan04.pages.dev/",
-            "https://coloksgp19.com/",
-            "https://yakuza66-gaming.pages.dev/",
-            "https://pusat.coloksgp-bet.cloud/",
-            "https://official.pantaslucu123.com/",
-            "https://dana.tokoipad.click/",
-            "https://pastigampangmenang.pages.dev/",
-            "https://mobile.keytoto-indonesia-my.id/",
-            "https://permainan.iosbetcastle.art/",
-            "https://katak22.net/",
-            "https://sanca999.ink/",
-            "https://situs.omacuan-resmigacorabiss.com/",
-            "https://gate.api66-core.host/",
-            "https://eksklusif.wrapfactorykc.online/",
-            "https://tuanpetir.com/",
-            "https://ms.akses-samurai69.com/",
-            "https://galakkale.wopslot-zeus.forum/",
-            "https://omacuan.com/",
-            "https://urbangreen.store/",
-            "https://indo88win.org/"
+            "https://www.investopedia.com/financial-advisor-4427710",
+            "https://www.bankrate.com/banking/savings/best-high-yield-savings-accounts/",
+            "https://www.nerdwallet.com/best/insurance/auto-insurance",
+            "https://www.forbes.com/advisor/investing/",
+            "https://www.businessinsider.com/personal-finance",
+            "https://www.creditkarma.com/",
+            "https://www.chase.com/personal/mortgage",
+            "https://www.prudential.com/personal/life-insurance",
+            "https://aws.amazon.com/what-is-cloud-computing/",
+            "https://www.cnbc.com/personal-finance/"
         ];
 
         let autoInterval = null;
+        let scrollInterval = null;
         let currentActiveUrl = "";
 
         function addLog(message, type = 'normal') {
@@ -226,6 +186,26 @@
             consoleBox.scrollTop = consoleBox.scrollHeight;
         }
 
+        // Fungsi Simulasi Interaksi Manusia (Auto Scroll di WebView)
+        function simulateUserInteraction() {
+            if (scrollInterval) clearInterval(scrollInterval);
+            
+            let scrollPosition = 0;
+            scrollInterval = setInterval(() => {
+                const iframe = document.getElementById('ad-frame');
+                try {
+                    scrollPosition += 150;
+                    if (scrollPosition > 1200) scrollPosition = 0;
+                    
+                    if (iframe.contentWindow) {
+                        iframe.contentWindow.scrollTo(0, scrollPosition);
+                    }
+                } catch (e) {
+                    // Penanganan proteksi Cross-Origin jika iframe dibatasi
+                }
+            }, 4000);
+        }
+
         function changeRandomUrl() {
             const randomIndex = Math.floor(Math.random() * urlList.length);
             currentActiveUrl = urlList[randomIndex];
@@ -233,12 +213,13 @@
             document.getElementById('ad-frame').src = currentActiveUrl;
             document.getElementById('current-url').innerText = currentActiveUrl;
             
-            addLog(`URL Dimuat: ${currentActiveUrl}`);
+            addLog(`Memuat Web High-eCPM: ${currentActiveUrl}`, "system");
+            simulateUserInteraction();
         }
 
         // Trigger GAS menggunakan metode Image Ping (Bypass CORS 100%)
         function triggerGAS() {
-            addLog("Mengirim sinyal ke Google Apps Script...", "gas");
+            addLog("Mengirim sinyal High-eCPM ke Google Apps Script...", "gas");
 
             const img = new Image();
             const targetFullUrl = `${GAS_WEB_APP_URL}?url=${encodeURIComponent(currentActiveUrl)}&t=${new Date().getTime()}`;
@@ -266,13 +247,17 @@
             document.getElementById('wv-status').innerText = `WebView Berjalan (Otomatis ${seconds}s)`;
             document.getElementById('wv-status').style.color = "#4ade80";
             
-            addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
+            addLog(`Otomatisasi High eCPM Aktif. Interval: ${seconds} detik`, "system");
         }
 
         function stopAutomation() {
             if (autoInterval) {
                 clearInterval(autoInterval);
                 autoInterval = null;
+            }
+            if (scrollInterval) {
+                clearInterval(scrollInterval);
+                scrollInterval = null;
             }
             document.getElementById('wv-status').innerText = "WebView Dihentikan (Manual)";
             document.getElementById('wv-status').style.color = "#f87171";
@@ -281,7 +266,7 @@
         }
 
         window.onload = function() {
-            addLog("Sistem kontrol siap. GAS Connected.", "system");
+            addLog("Sistem kontrol High-eCPM siap. GAS Connected.", "system");
             startAutomation();
         };
     </script>
