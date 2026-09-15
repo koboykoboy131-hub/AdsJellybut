@@ -3,89 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Pop-up Iklan Rotasi 1 Menit</title>
+    <title>JellybutAdsControler</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 40px;
-            background-color: #f4f4f9;
-            text-align: center;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Background Gelap Overlay */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            padding: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .sub-header {
+            font-size: 11px;
+            color: #3b82f6;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 4px 0;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Card / Container */
+        .card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Input & Select */
+        .input-box, .select-box {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            padding: 12px 14px;
+            background-color: #0b0f19;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 12px;
+            outline: none;
         }
 
-        /* Kotak Pop-up */
-        .popup-box {
-            background-color: #ffffff;
-            width: 90%;
-            max-width: 800px;
-            height: 80vh;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .input-box:focus, .select-box:focus {
+            border-color: #2563eb;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-blue {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-red {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-group .btn {
+            flex: 1;
+        }
+
+        /* Activity Log Console */
+        .log-console {
+            background-color: #05070d;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 12px;
+            height: 140px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 11px;
+            color: #10b981;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .log-entry {
+            line-height: 1.4;
+            word-break: break-all;
+        }
+
+        .log-entry .time {
+            color: #6b7280;
+        }
+
+        .log-entry.system {
+            color: #3b82f6;
+        }
+
+        .log-entry.alert {
+            color: #ef4444;
+        }
+
+        /* WebView Container */
+        .url-display {
+            font-size: 13px;
+            color: #60a5fa;
+            word-break: break-all;
+            margin-bottom: 4px;
+        }
+
+        .status-text {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
+
+        .webview-box {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            border-radius: 8px;
             overflow: hidden;
-            animation: fadeIn 0.3s ease-in-out;
+            border: 1px solid #1f2937;
         }
 
-        /* Frame URL Web */
-        .popup-iframe {
+        .webview-box iframe {
             width: 100%;
             height: 100%;
             border: none;
-        }
-
-        /* Tombol Close (X) */
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            z-index: 1001;
-            background: #fff;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            text-align: center;
-            line-height: 32px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .close-btn:hover {
-            color: #ff0000;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <h1>Selamat Datang di Website Saya</h1>
-    <p>Tunggu sekitar 2 detik, pop-up iklan acak akan otomatis muncul.</p>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="sub-header">CONTROL WEB JELLYBUT</div>
+        <div class="title">JellybutAdsControler</div>
+        <div class="status-badge">NON-ROOT DEVICE • SYSTEM SECURE</div>
+    </div>
 
-    <!-- Overlay & Pop-up Iklan -->
-    <div id="popup-overlay" class="popup-overlay">
-        <div class="popup-box">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <iframe id="popup-frame" src="" class="popup-iframe" title="Iklan Web"></iframe>
+    <!-- Remote Source Card -->
+    <div class="card">
+        <div class="card-label">REMOTE URL SOURCE</div>
+        <input type="text" id="remote-url" class="input-box" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
+        <button class="btn btn-blue" onclick="saveAndRefresh()">SAVE & REFRESH</button>
+    </div>
+
+    <!-- Automation Card -->
+    <div class="card">
+        <div class="card-label">AUTOMATION</div>
+        <select id="timer-select" class="select-box">
+            <option value="60000" selected>1 Menit</option>
+            <option value="120000">2 Menit</option>
+            <option value="300000">5 Menit</option>
+            <option value="30000">30 Detik</option>
+        </select>
+        <div class="button-group">
+            <button class="btn btn-blue" onclick="startAutomation()">START</button>
+            <button class="btn btn-red" onclick="stopAutomation()">STOP</button>
+        </div>
+    </div>
+
+    <!-- Activity Log Card -->
+    <div class="card">
+        <div class="card-label">SYSTEM & ROTATION LOG</div>
+        <div id="log-console" class="log-console"></div>
+    </div>
+
+    <!-- WebView Section -->
+    <div class="card">
+        <div class="card-label">WEBVIEW</div>
+        <div id="current-url" class="url-display">-</div>
+        <div id="wv-status" class="status-text">WebView Berjalan (Otomatis)</div>
+        
+        <div class="webview-box">
+            <iframe id="ad-frame" src="" title="WebView Display"></iframe>
         </div>
     </div>
 
@@ -116,36 +253,70 @@
             "https://indo88win.org/"
         ];
 
-        // Fungsi memilih URL acak baru
+        let autoInterval = null;
+
+        // Fungsi mencatat pesan log ke konsol tampilan
+        function addLog(message, type = 'normal') {
+            const consoleBox = document.getElementById('log-console');
+            const timeString = new Date().toLocaleTimeString('id-ID');
+            
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<span class="time">[${timeString}]</span> ${message}`;
+            
+            consoleBox.appendChild(entry);
+            consoleBox.scrollTop = consoleBox.scrollHeight; // Auto-scroll ke bawah
+        }
+
+        // Fungsi ganti URL acak
         function changeRandomUrl() {
             const randomIndex = Math.floor(Math.random() * urlList.length);
             const selectedUrl = urlList[randomIndex];
-            document.getElementById('popup-frame').src = selectedUrl;
+            
+            document.getElementById('ad-frame').src = selectedUrl;
+            document.getElementById('current-url').innerText = selectedUrl;
+            
+            addLog(`URL Dimuat: ${selectedUrl}`);
         }
 
-        function showPopup() {
-            // Pilih URL acak pertama
+        // Manual Refresh
+        function saveAndRefresh() {
+            addLog("Manual Save & Refresh dipicu.", "system");
             changeRandomUrl();
-            document.getElementById('popup-overlay').style.display = 'flex';
-
-            // Set interval untuk mengacak & mengganti URL setiap 1 menit (60.000 ms)
-            setInterval(changeRandomUrl, 60000);
         }
 
-        // Tutup pop-up (hanya menyembunyikan tampilan, interval 1 menit tetap berjalan)
-        function closePopup() {
-            document.getElementById('popup-overlay').style.display = 'none';
+        // Start Automation
+        function startAutomation() {
+            if (autoInterval) clearInterval(autoInterval);
+            
+            const duration = parseInt(document.getElementById('timer-select').value);
+            const seconds = duration / 1000;
+            
+            changeRandomUrl();
+            autoInterval = setInterval(changeRandomUrl, duration);
+            
+            document.getElementById('wv-status').innerText = `WebView Berjalan (Otomatis ${seconds}s)`;
+            document.getElementById('wv-status').style.color = "#4ade80";
+            
+            addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
         }
 
-        window.onload = function() {
-            setTimeout(showPopup, 2000);
-        };
-
-        window.onclick = function(event) {
-            const overlay = document.getElementById('popup-overlay');
-            if (event.target === overlay) {
-                closePopup();
+        // Stop Automation
+        function stopAutomation() {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
             }
+            document.getElementById('wv-status').innerText = "WebView Dihentikan (Manual)";
+            document.getElementById('wv-status').style.color = "#f87171";
+            
+            addLog("Otomatisasi dihentikan oleh pengguna.", "alert");
+        }
+
+        // Inisialisasi awal
+        window.onload = function() {
+            addLog("Sistem kontrol siap. Memulai rotasi...", "system");
+            startAutomation();
         };
     </script>
 </body>
