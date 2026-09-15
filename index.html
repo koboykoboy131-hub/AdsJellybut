@@ -3,321 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JellybutAdsControler</title>
+    <title>Jellybut Controler + Ads Integration</title>
+
+    <!-- ============================================================ -->
+    <!-- [SLOT 1] SCRIPT IKLAN HEADER / DIRECT LINK dari AD NETWORK   -->
+    <!-- Tempel kode iklan dari penyedia iklan kamu di bawah ini      -->
+    <!-- Contoh: <script src="https://alwingulla.com/script.js"></script> -->
+    <!-- ============================================================ -->
+
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            padding: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .sub-header {
-            font-size: 11px;
-            color: #3b82f6;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .title {
-            font-size: 24px;
-            font-weight: 800;
-            margin: 4px 0;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* Card / Container */
-        .card {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-
-        .card-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #64748b;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        /* Input & Select */
-        .input-box, .select-box {
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #0b0f19; color: #ffffff; padding: 15px; max-width: 500px; margin: 0 auto; }
+        .card { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .card-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 12px; }
+        
+        /* Area khusus penampung iklan banner */
+        .ad-container {
             width: 100%;
-            padding: 12px 14px;
-            background-color: #0b0f19;
-            border: 1px solid #1f2937;
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 14px;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .input-box:focus, .select-box:focus {
-            border-color: #2563eb;
-        }
-
-        /* Buttons */
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .btn:active {
-            opacity: 0.8;
-        }
-
-        .btn-blue {
-            background-color: #2563eb;
-            color: white;
-        }
-
-        .btn-red {
-            background-color: #dc2626;
-            color: white;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .button-group .btn {
-            flex: 1;
-        }
-
-        /* Activity Log Console */
-        .log-console {
+            min-height: 50px;
             background-color: #05070d;
-            border: 1px solid #1f2937;
+            border: 1px dashed #374151;
             border-radius: 8px;
-            padding: 12px;
-            height: 140px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 11px;
-            color: #10b981;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .log-entry {
-            line-height: 1.4;
-            word-break: break-all;
-        }
-
-        .log-entry .time {
-            color: #6b7280;
-        }
-
-        .log-entry.system {
-            color: #3b82f6;
-        }
-
-        .log-entry.alert {
-            color: #ef4444;
-        }
-
-        /* WebView Container */
-        .url-display {
-            font-size: 13px;
-            color: #60a5fa;
-            word-break: break-all;
-            margin-bottom: 4px;
-        }
-
-        .status-text {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 12px;
-        }
-
-        .webview-box {
-            width: 100%;
-            height: 400px;
-            background-color: #000;
-            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
             overflow: hidden;
-            border: 1px solid #1f2937;
+            text-align: center;
         }
 
-        .webview-box iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; background-color: #16a34a; color: white; }
+        .webview-box { width: 100%; height: 350px; background-color: #000; border-radius: 8px; border: 1px solid #1f2937; }
+        .webview-box iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <div class="header">
-        <div class="sub-header">CONTROL WEB JELLYBUT</div>
-        <div class="title">JellybutAdsControler</div>
-        <div class="status-badge">NON-ROOT DEVICE • SYSTEM SECURE</div>
+    <!-- ============================================================ -->
+    <!-- [SLOT 2] IKLAN BANNER ATAS (Contoh Ukuran 320x50 atau 300x250) -->
+    <!-- ============================================================ -->
+    <div class="ad-container" id="ad-slot-top">
+        <!-- PASTE KODE BANNER IKLAN KAMU DI SINI -->
+        <span style="font-size: 11px; color: #6b7280;">[ Slot Iklan Banner Atas ]</span>
     </div>
 
-    <!-- Remote Source Card -->
+    <!-- Header & Kontrol -->
     <div class="card">
-        <div class="card-label">REMOTE URL SOURCE</div>
-        <input type="text" id="remote-url" class="input-box" value="https://koboykoboy131-hub.github.io/AdsJellybut/">
-        <button class="btn btn-blue" onclick="saveAndRefresh()">SAVE & REFRESH</button>
+        <div class="card-label">GOOGLE APPS SCRIPT BACKEND</div>
+        <button class="btn" onclick="triggerGAS()">TRIGGER URLFETCHAPP (GAS)</button>
     </div>
 
-    <!-- Automation Card -->
-    <div class="card">
-        <div class="card-label">AUTOMATION</div>
-        <select id="timer-select" class="select-box">
-            <option value="60000" selected>1 Menit</option>
-            <option value="120000">2 Menit</option>
-            <option value="300000">5 Menit</option>
-            <option value="30000">30 Detik</option>
-        </select>
-        <div class="button-group">
-            <button class="btn btn-blue" onclick="startAutomation()">START</button>
-            <button class="btn btn-red" onclick="stopAutomation()">STOP</button>
-        </div>
+    <!-- ============================================================ -->
+    <!-- [SLOT 3] IKLAN BANNER TENGAH                                  -->
+    <!-- ============================================================ -->
+    <div class="ad-container" id="ad-slot-middle">
+        <!-- PASTE KODE BANNER IKLAN KEDUA DI SINI -->
+        <span style="font-size: 11px; color: #6b7280;">[ Slot Iklan Banner Tengah ]</span>
     </div>
 
-    <!-- Activity Log Card -->
+    <!-- WebView Display -->
     <div class="card">
-        <div class="card-label">SYSTEM & ROTATION LOG</div>
-        <div id="log-console" class="log-console"></div>
-    </div>
-
-    <!-- WebView Section -->
-    <div class="card">
-        <div class="card-label">WEBVIEW</div>
-        <div id="current-url" class="url-display">-</div>
-        <div id="wv-status" class="status-text">WebView Berjalan (Otomatis)</div>
-        
+        <div class="card-label">WEBVIEW DISPLAY</div>
         <div class="webview-box">
-            <iframe id="ad-frame" src="" title="WebView Display"></iframe>
+            <iframe id="ad-frame" src="https://keytoto.com/"></iframe>
         </div>
     </div>
 
     <script>
-        const urlList = [
-            "https://keytoto.com/",
-            "https://superpetir19.com/",
-            "https://lucu123landasan.co/",
-            "https://evoscuan04.pages.dev/",
-            "https://coloksgp19.com/",
-            "https://yakuza66-gaming.pages.dev/",
-            "https://pusat.coloksgp-bet.cloud/",
-            "https://official.pantaslucu123.com/",
-            "https://dana.tokoipad.click/",
-            "https://pastigampangmenang.pages.dev/",
-            "https://mobile.keytoto-indonesia-my.id/",
-            "https://permainan.iosbetcastle.art/",
-            "https://katak22.net/",
-            "https://sanca999.ink/",
-            "https://situs.omacuan-resmigacorabiss.com/",
-            "https://gate.api66-core.host/",
-            "https://eksklusif.wrapfactorykc.online/",
-            "https://tuanpetir.com/",
-            "https://ms.akses-samurai69.com/",
-            "https://galakkale.wopslot-zeus.forum/",
-            "https://omacuan.com/",
-            "https://urbangreen.store/",
-            "https://indo88win.org/"
-        ];
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpgunv7ZkN4uky2NCDrqsLMHNGu1BC_4x9uTgy6IXoelKHgqWmgl-9T2ET0jUQAZ4M/exec";
+        const currentActiveUrl = "https://keytoto.com/";
 
-        let autoInterval = null;
-
-        // Fungsi mencatat pesan log ke konsol tampilan
-        function addLog(message, type = 'normal') {
-            const consoleBox = document.getElementById('log-console');
-            const timeString = new Date().toLocaleTimeString('id-ID');
-            
-            const entry = document.createElement('div');
-            entry.className = `log-entry ${type}`;
-            entry.innerHTML = `<span class="time">[${timeString}]</span> ${message}`;
-            
-            consoleBox.appendChild(entry);
-            consoleBox.scrollTop = consoleBox.scrollHeight; // Auto-scroll ke bawah
+        function triggerGAS() {
+            const img = new Image();
+            img.src = `${GAS_WEB_APP_URL}?url=${encodeURIComponent(currentActiveUrl)}&t=${new Date().getTime()}`;
         }
-
-        // Fungsi ganti URL acak
-        function changeRandomUrl() {
-            const randomIndex = Math.floor(Math.random() * urlList.length);
-            const selectedUrl = urlList[randomIndex];
-            
-            document.getElementById('ad-frame').src = selectedUrl;
-            document.getElementById('current-url').innerText = selectedUrl;
-            
-            addLog(`URL Dimuat: ${selectedUrl}`);
-        }
-
-        // Manual Refresh
-        function saveAndRefresh() {
-            addLog("Manual Save & Refresh dipicu.", "system");
-            changeRandomUrl();
-        }
-
-        // Start Automation
-        function startAutomation() {
-            if (autoInterval) clearInterval(autoInterval);
-            
-            const duration = parseInt(document.getElementById('timer-select').value);
-            const seconds = duration / 1000;
-            
-            changeRandomUrl();
-            autoInterval = setInterval(changeRandomUrl, duration);
-            
-            document.getElementById('wv-status').innerText = `WebView Berjalan (Otomatis ${seconds}s)`;
-            document.getElementById('wv-status').style.color = "#4ade80";
-            
-            addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
-        }
-
-        // Stop Automation
-        function stopAutomation() {
-            if (autoInterval) {
-                clearInterval(autoInterval);
-                autoInterval = null;
-            }
-            document.getElementById('wv-status').innerText = "WebView Dihentikan (Manual)";
-            document.getElementById('wv-status').style.color = "#f87171";
-            
-            addLog("Otomatisasi dihentikan oleh pengguna.", "alert");
-        }
-
-        // Inisialisasi awal
-        window.onload = function() {
-            addLog("Sistem kontrol siap. Memulai rotasi...", "system");
-            startAutomation();
-        };
     </script>
 </body>
 </html>
