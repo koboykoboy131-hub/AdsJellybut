@@ -36,7 +36,7 @@
 
         .card-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 12px; letter-spacing: 0.5px; }
 
-        .input-box, .select-box {
+        .select-box {
             width: 100%;
             padding: 12px 14px;
             background-color: #0b0f19;
@@ -48,7 +48,7 @@
             outline: none;
         }
 
-        .input-box:focus, .select-box:focus { border-color: #2563eb; }
+        .select-box:focus { border-color: #2563eb; }
 
         .btn {
             width: 100%;
@@ -154,8 +154,8 @@
     </div>
 
     <script>
-        // Web App URL dari Google Apps Script kamu yang sudah langsung dihubungkan
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzYJfWo3XzsUO7Gs5aTEbtfYJIR0JMjNtDqgpfZNrKcDQWKqxfwmbgbp-tEdxNSBaEs/exec";
+        // URL Web App Google Apps Script Baru Milikmu
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxpgunv7ZkN4uky2NCDrqsLMHNGu1BC_4x9uTgy6IXoelKHgqWmgl-9T2ET0jUQAZ4M/exec";
 
         // Daftar URL Web Rotasi
         const urlList = [
@@ -187,7 +187,6 @@
         let autoInterval = null;
         let currentActiveUrl = "";
 
-        // Fungsi mencatat log
         function addLog(message, type = 'normal') {
             const consoleBox = document.getElementById('log-console');
             const timeString = new Date().toLocaleTimeString('id-ID');
@@ -200,7 +199,6 @@
             consoleBox.scrollTop = consoleBox.scrollHeight;
         }
 
-        // Fungsi mengganti URL secara acak
         function changeRandomUrl() {
             const randomIndex = Math.floor(Math.random() * urlList.length);
             currentActiveUrl = urlList[randomIndex];
@@ -211,25 +209,22 @@
             addLog(`URL Dimuat: ${currentActiveUrl}`);
         }
 
-        // Fungsi memicu Google Apps Script secara otomatis via Fetch
+        // Fungsi memicu GAS menggunakan mode 'no-cors' agar lolos dari blokir CORS browser HP
         function triggerGAS() {
             addLog("Mengirim sinyal ke Google Apps Script...", "gas");
 
-            // Mengirim request GET dengan membawa parameter URL aktif
             fetch(`${GAS_WEB_APP_URL}?url=${encodeURIComponent(currentActiveUrl)}`, {
                 method: 'GET',
-                mode: 'cors'
+                mode: 'no-cors'
             })
-            .then(response => response.text())
-            .then(data => {
-                addLog(`GAS Response: ${data}`, "gas");
+            .then(() => {
+                addLog("GAS Response: Sinyal berhasil terkirim ke Server!", "gas");
             })
             .catch(err => {
                 addLog(`GAS Error: Hubungan gagal (${err.message})`, "alert");
             });
         }
 
-        // Fungsi memulai otomatisasi
         function startAutomation() {
             if (autoInterval) clearInterval(autoInterval);
             
@@ -245,7 +240,6 @@
             addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
         }
 
-        // Fungsi menghentikan otomatisasi
         function stopAutomation() {
             if (autoInterval) {
                 clearInterval(autoInterval);
@@ -257,7 +251,6 @@
             addLog("Otomatisasi dihentikan oleh pengguna.", "alert");
         }
 
-        // Inisialisasi awal saat halaman dimuat
         window.onload = function() {
             addLog("Sistem kontrol siap. GAS Connected.", "system");
             startAutomation();
