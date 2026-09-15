@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jellybut Offerwall Controller</title>
+    <title>JellybutAdsControler + GAS Connected</title>
 
     <style>
         * {
@@ -21,33 +21,11 @@
             margin: 0 auto;
         }
 
-        /* Header UI */
-        .header {
-            margin-bottom: 15px;
-            text-align: center;
-        }
+        .header { margin-bottom: 20px; }
+        .sub-header { font-size: 11px; color: #3b82f6; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .title { font-size: 24px; font-weight: 800; margin: 4px 0; }
+        .status-badge { font-size: 11px; color: #10b981; font-weight: 600; letter-spacing: 0.5px; }
 
-        .sub-header {
-            font-size: 11px;
-            color: #3b82f6;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .title {
-            font-size: 22px;
-            font-weight: 800;
-            margin: 4px 0;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 600;
-        }
-
-        /* Card Container */
         .card {
             background-color: #111827;
             border: 1px solid #1f2937;
@@ -56,32 +34,22 @@
             margin-bottom: 16px;
         }
 
-        .card-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #64748b;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
+        .card-label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 12px; letter-spacing: 0.5px; }
 
-        /* Reward Task Bar */
-        .task-box {
-            background-color: #1e293b;
-            border: 1px solid #3b82f6;
+        .input-box, .select-box {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #0b0f19;
+            border: 1px solid #1f2937;
             border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            margin-bottom: 16px;
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 12px;
+            outline: none;
         }
 
-        .timer-display {
-            font-size: 20px;
-            font-weight: 800;
-            color: #f59e0b;
-            margin: 6px 0;
-        }
+        .input-box:focus, .select-box:focus { border-color: #2563eb; }
 
-        /* Buttons */
         .btn {
             width: 100%;
             padding: 14px;
@@ -93,23 +61,20 @@
             transition: opacity 0.2s;
         }
 
-        .btn-claim {
-            background-color: #10b981;
-            color: white;
-            display: none; /* Sembunyi sebelum timer selesai */
-        }
+        .btn:active { opacity: 0.8; }
+        .btn-blue { background-color: #2563eb; color: white; }
+        .btn-green { background-color: #16a34a; color: white; margin-top: 6px; }
+        .btn-red { background-color: #dc2626; color: white; }
 
-        .btn-claim:active {
-            opacity: 0.8;
-        }
+        .button-group { display: flex; gap: 10px; }
+        .button-group .btn { flex: 1; }
 
-        /* Activity Log Console */
         .log-console {
             background-color: #05070d;
             border: 1px solid #1f2937;
             border-radius: 8px;
             padding: 12px;
-            height: 120px;
+            height: 140px;
             overflow-y: auto;
             font-family: monospace;
             font-size: 11px;
@@ -122,14 +87,15 @@
         .log-entry { line-height: 1.4; word-break: break-all; }
         .log-entry .time { color: #6b7280; }
         .log-entry.system { color: #3b82f6; }
-        .log-entry.success { color: #10b981; }
+        .log-entry.alert { color: #ef4444; }
+        .log-entry.gas { color: #f59e0b; }
 
-        /* WebView Container */
-        .url-display { font-size: 12px; color: #60a5fa; word-break: break-all; margin-bottom: 4px; }
-        
+        .url-display { font-size: 13px; color: #60a5fa; word-break: break-all; margin-bottom: 4px; }
+        .status-text { font-size: 12px; color: #9ca3af; margin-bottom: 12px; }
+
         .webview-box {
             width: 100%;
-            height: 380px;
+            height: 400px;
             background-color: #000;
             border-radius: 8px;
             overflow: hidden;
@@ -143,37 +109,54 @@
 
     <!-- Header Section -->
     <div class="header">
-        <div class="sub-header">OFFERWALL GAME SYSTEM</div>
-        <div class="title">Jellybut Task Center</div>
-        <div class="status-badge">TUGAS MENONTON & ROTASI IKLAN</div>
+        <div class="sub-header">CONTROL WEB JELLYBUT</div>
+        <div class="title">JellybutAdsControler</div>
+        <div class="status-badge">● GOOGLE APPS SCRIPT CONNECTED</div>
     </div>
 
-    <!-- Reward Status Card -->
-    <div class="task-box">
-        <div class="card-label" style="color: #94a3b8;">SISA WAKTU TUGAS GAMER</div>
-        <div id="timer-text" class="timer-display">60 Detik</div>
-        <p id="task-desc" style="font-size: 11px; color: #9ca3af;">Tetap berada di halaman ini untuk mengklaim Reward DANA.</p>
-        <button id="claim-btn" class="btn btn-claim" onclick="sendRewardToGame()">KLAIM REWARD SALDO DANA</button>
-    </div>
-
-    <!-- System & Rotation Log -->
+    <!-- Google Apps Script Control Card -->
     <div class="card">
-        <div class="card-label">TASK & ROTATION LOG</div>
+        <div class="card-label">GOOGLE APPS SCRIPT BACKEND</div>
+        <p style="font-size: 11px; color: #9ca3af; margin-bottom: 10px;">URL GAS aktif & terintegrasi secara otomatis di server.</p>
+        <button class="btn btn-green" onclick="triggerGAS()">TRIGGER URLFETCHAPP (GAS)</button>
+    </div>
+
+    <!-- Automation Card -->
+    <div class="card">
+        <div class="card-label">AUTOMATION</div>
+        <select id="timer-select" class="select-box">
+            <option value="60000" selected>1 Menit</option>
+            <option value="120000">2 Menit</option>
+            <option value="300000">5 Menit</option>
+            <option value="30000">30 Detik</option>
+        </select>
+        <div class="button-group">
+            <button class="btn btn-blue" onclick="startAutomation()">START</button>
+            <button class="btn btn-red" onclick="stopAutomation()">STOP</button>
+        </div>
+    </div>
+
+    <!-- Activity Log Console -->
+    <div class="card">
+        <div class="card-label">SYSTEM & ROTATION LOG</div>
         <div id="log-console" class="log-console"></div>
     </div>
 
     <!-- WebView Section -->
     <div class="card">
-        <div class="card-label">PREVIEW ROTASI WEB</div>
+        <div class="card-label">WEBVIEW DISPLAY</div>
         <div id="current-url" class="url-display">-</div>
+        <div id="wv-status" class="status-text">WebView Berjalan (Otomatis)</div>
         
         <div class="webview-box">
-            <!-- Sandbox memblokir auto-redirect paksa keluar dari aplikasi -->
             <iframe id="ad-frame" src="" title="WebView Display" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
         </div>
     </div>
 
     <script>
+        // Web App URL dari Google Apps Script kamu yang sudah langsung dihubungkan
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzYJfWo3XzsUO7Gs5aTEbtfYJIR0JMjNtDqgpfZNrKcDQWKqxfwmbgbp-tEdxNSBaEs/exec";
+
         // Daftar URL Web Rotasi
         const urlList = [
             "https://keytoto.com/",
@@ -201,10 +184,10 @@
             "https://indo88win.org/"
         ];
 
-        let countdown = 60; // Durasi Tugas (60 Detik)
-        let timerInterval = null;
+        let autoInterval = null;
+        let currentActiveUrl = "";
 
-        // Fungsi mencatat pesan log
+        // Fungsi mencatat log
         function addLog(message, type = 'normal') {
             const consoleBox = document.getElementById('log-console');
             const timeString = new Date().toLocaleTimeString('id-ID');
@@ -220,61 +203,64 @@
         // Fungsi mengganti URL secara acak
         function changeRandomUrl() {
             const randomIndex = Math.floor(Math.random() * urlList.length);
-            const selectedUrl = urlList[randomIndex];
+            currentActiveUrl = urlList[randomIndex];
             
-            document.getElementById('ad-frame').src = selectedUrl;
-            document.getElementById('current-url').innerText = selectedUrl;
+            document.getElementById('ad-frame').src = currentActiveUrl;
+            document.getElementById('current-url').innerText = currentActiveUrl;
             
-            addLog(`Rotasi Web: Dimuat ${selectedUrl}`);
+            addLog(`URL Dimuat: ${currentActiveUrl}`);
         }
 
-        // Hitung Mundur Tugas
-        function startTaskTimer() {
-            timerInterval = setInterval(() => {
-                countdown--;
-                document.getElementById('timer-text').innerText = `${countdown} Detik`;
+        // Fungsi memicu Google Apps Script secara otomatis via Fetch
+        function triggerGAS() {
+            addLog("Mengirim sinyal ke Google Apps Script...", "gas");
 
-                if (countdown % 15 === 0 && countdown > 0) {
-                    changeRandomUrl(); // Ganti web setiap 15 detik
-                }
-
-                if (countdown <= 0) {
-                    clearInterval(timerInterval);
-                    document.getElementById('timer-text').innerText = "TUGAS SELESAI!";
-                    document.getElementById('timer-text').style.color = "#10b981";
-                    document.getElementById('task-desc').innerText = "Silakan klik tombol di bawah untuk mengambil reward kamu.";
-                    document.getElementById('claim-btn').style.display = "block";
-                    
-                    addLog("Tugas selesai. Tombol klaim aktif!", "success");
-                }
-            }, 1000);
+            // Mengirim request GET dengan membawa parameter URL aktif
+            fetch(`${GAS_WEB_APP_URL}?url=${encodeURIComponent(currentActiveUrl)}`, {
+                method: 'GET',
+                mode: 'cors'
+            })
+            .then(response => response.text())
+            .then(data => {
+                addLog(`GAS Response: ${data}`, "gas");
+            })
+            .catch(err => {
+                addLog(`GAS Error: Hubungan gagal (${err.message})`, "alert");
+            });
         }
 
-        // Mengirimkan Sinyal Ke Game (Android / Unity Interface)
-        function sendRewardToGame() {
-            addLog("Mengirim sinyal reward ke Game...", "system");
-
-            // 1. Jalur Android Studio Native
-            if (window.AndroidInterface && typeof window.AndroidInterface.onTaskCompleted === 'function') {
-                window.AndroidInterface.onTaskCompleted();
-                addLog("Reward terkirim via Android Interface!", "success");
-            } 
-            // 2. Jalur Unity (UniWebView Protocol)
-            else if (window.UniWebView) {
-                window.location.href = "uniwebview://task-complete";
-                addLog("Reward terkirim via UniWebView Protocol!", "success");
-            } 
-            // 3. Fallback browser biasa
-            else {
-                alert("Tugas Selesai! Saldo DANA berhasil diklaim ke Akun Game.");
-            }
-        }
-
-        // Inisialisasi awal saat halaman dibuka
-        window.onload = function() {
-            addLog("Offerwall dimulai...", "system");
+        // Fungsi memulai otomatisasi
+        function startAutomation() {
+            if (autoInterval) clearInterval(autoInterval);
+            
+            const duration = parseInt(document.getElementById('timer-select').value);
+            const seconds = duration / 1000;
+            
             changeRandomUrl();
-            startTaskTimer();
+            autoInterval = setInterval(changeRandomUrl, duration);
+            
+            document.getElementById('wv-status').innerText = `WebView Berjalan (Otomatis ${seconds}s)`;
+            document.getElementById('wv-status').style.color = "#4ade80";
+            
+            addLog(`Otomatisasi dijalankan. Interval: ${seconds} detik`, "system");
+        }
+
+        // Fungsi menghentikan otomatisasi
+        function stopAutomation() {
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+            }
+            document.getElementById('wv-status').innerText = "WebView Dihentikan (Manual)";
+            document.getElementById('wv-status').style.color = "#f87171";
+            
+            addLog("Otomatisasi dihentikan oleh pengguna.", "alert");
+        }
+
+        // Inisialisasi awal saat halaman dimuat
+        window.onload = function() {
+            addLog("Sistem kontrol siap. GAS Connected.", "system");
+            startAutomation();
         };
     </script>
 </body>
